@@ -21,8 +21,10 @@ local nt = {'n', 't'}
 -- neovim configurations
 
 -- remapings
-vim.keymap.set(n, '<Up>', 'gk', nsd("Move UP through virtual lines"))
-vim.keymap.set(n, '<Down>', 'gj', nsd('Move DOWN through virtual lines'))
+vim.keymap.set(n, '<Up>', 'gk', nsd('Move UP through virtual lines in NORMAL mode'))
+vim.keymap.set(n, '<Down>', 'gj', nsd('Move DOWN through virtual lines in NORMAL mode'))
+vim.keymap.set(i, '<Up>', '<C-o>gk', nsd('Move UP through virtual lines in INSERT mode'))
+vim.keymap.set(i, '<Down>', '<C-o>gj', nsd('Move DOWN through virtual lines in INSERT mode'))
 
 -- shortcuts
 vim.keymap.set(ni, '<A-z>', '<C-o>u', nsd('Undo last change'))
