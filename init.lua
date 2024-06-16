@@ -44,5 +44,8 @@ require'setup'
 -- carrega o suporte a linguagens
 require'setup-lsp'
 
+-- carrega as configurações de debug
+require'setup-dap'
+
 -- carrega o tema
 vim.cmd.colorscheme'tokyonight-night'
