@@ -8,9 +8,9 @@ lspconfig.gopls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 
-	cmd = {"gopls"},
-	filetypes = { "go", "gomod", "gowork", "gotmpl" },
-	root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+	cmd = { 'gopls' },
+	filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+	root_dir = util.root_pattern('go.work', 'go.mod', '.git'),
 
 	settings = {
 		gopls = {
@@ -31,6 +31,35 @@ lspconfig.gopls.setup({
 	},
 })
 
+lspconfig.phpactor.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	cmd = { 'phpactor', 'language-server' },
+	filetypes = { 'php' },
+	root_dir = util.root_pattern('index.php', 'composer.json', '.git'),
+
+	settings = {
+		phpactor = {
+			completion = {
+				enabled = true,
+			},
+			monorepo = {
+				enabled = true,
+			},
+			phpstan = {
+				enabled = true,
+			},
+			psalm = {
+				enabled = true,
+			},
+			xdebug = {
+				enabled = true,
+			},
+		},
+	},
+})
+
 lspconfig.lua_ls.setup({})
 
 lspconfig.bashls.setup({})
@@ -38,6 +67,8 @@ lspconfig.bashls.setup({})
 lspconfig.jsonls.setup({})
 
 lspconfig.yamlls.setup({})
+
+
 
 --[[
 Configuração de LSPs (Language Server Protocols)
