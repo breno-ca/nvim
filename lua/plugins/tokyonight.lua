@@ -1,4 +1,4 @@
 return {
 	'folke/tokyonight.nvim',
-	tag = 'v3.0.1',
+	tag = 'v3.0.1'
 }
