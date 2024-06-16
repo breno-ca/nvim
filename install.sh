@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 # Este script irá instalar o neovim e as dependências
 # de build dos plugins. Irá também atualizar a versão
