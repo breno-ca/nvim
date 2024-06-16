@@ -1,11 +1,13 @@
 -- personalizações na UI
-require'barbar'.setup()
+require'barbar'.setup({
+	auto_hide = true,
+})
 require'gitsigns'.setup()
 require'nvim-tree'.setup({
 	view = { preserve_window_proportions = true },
 	filters = {
 		custom = { '.git' },
-		exclude = { '.gitignore' },
+		exclude = { '.gitignore', '.github' },
 	},
 	git = {
 		ignore = false,
