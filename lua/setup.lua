@@ -4,7 +4,12 @@ require'barbar'.setup({
 })
 require'gitsigns'.setup()
 require'nvim-tree'.setup({
-	view = { preserve_window_proportions = true },
+	view = {
+		preserve_window_proportions = true,
+	},
+	update_focused_file = {
+        enable = true,
+    },
 	filters = {
 		custom = { '.git' },
 		exclude = { '.gitignore', '.github' },
