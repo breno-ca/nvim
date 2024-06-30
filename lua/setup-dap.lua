@@ -1,28 +1,28 @@
-local dap = require'dap'
-local dapui = require'dapui'
-local virtual = require'nvim-dap-virtual-text'
--- local dlv = vim.fn.exepath('/home/breno-ca/go/bin/dlv')
-local testname = function ()
+Dap = require 'dap'
+Dapui = require 'dapui'
+Virtual = require 'nvim-dap-virtual-text'
+
+local testname = function()
 	return vim.fn.input('Type the full test name: ')
 end
 
-dap.adapters.delve = {
-  type = 'server',
-  port = '${port}',
-  executable = {
-    command = 'dlv',
-    args = {'dap', '-l', '127.0.0.1:${port}'},
-  }
+------------------ GO ------------------
+Dap.adapters.delve = {
+	type = 'server',
+	port = '${port}',
+	executable = {
+		command = 'dlv',
+		args = { 'dap', '-l', '127.0.0.1:${port}' },
+	}
 }
 
-dap.configurations.go = {
+Dap.configurations.go = {
 	{
 		type = 'delve',
 		name = 'Debug',
 		request = 'launch',
 		program = '${file}',
 	},
-	-- works with go.mod packages and sub packages 
 	{
 		type = 'delve',
 		name = 'Debug test',
@@ -36,50 +36,37 @@ dap.configurations.go = {
 		request = 'launch',
 		mode = 'test',
 		args = {
-			-- ' -- ',
 			'-test.run',
 			testname,
 		},
 		program = './${relativeFileDirname}',
 	},
 }
--- 
--- dap.configurations.go = {
--- 	{
--- 	    type = 'go';
--- 	    name = 'Debug';
--- 	    request = 'launch';
--- 	    showLog = false;
--- 	    program = "${file}";
--- 	    dlvToolPath = dlv;
--- 	},
--- 	{
--- 		type = 'go';
--- 		name = 'Debug Test Function';
--- 		request = 'launch';
--- 		mode = 'test';
--- 		showLog = false;
--- 		program = "${workspaceFolder}";
--- 		args = {
--- 			'-test.run',
--- 			'MyTestFunction'
--- 		};
--- 		dlvToolPath = dlv;
--- 	},
--- 	{
--- 		type = 'go';
--- 		name = 'Debug Test';
--- 		request = 'launch';
--- 		mode = 'debug';
--- 		showLog = false;
--- 		program = "${fileDirname}";
--- 		dlvToolPath = dlv;
--- 	},
--- }
--- 
-virtual.setup({})
+------------------ GO ------------------
 
-dapui.setup({
+------------------ PHP ------------------
+Dap.adapters.php = {
+	type = 'executable',
+	command = 'node',
+	args = { os.getenv('HOME') .. '/vscode-php-debug/out/phpDebug.js' },
+}
+
+-- reescreva a configuração para debug php
+Dap.configurations.php = {
+	{
+		type = 'php',
+		request = 'launch',
+		name = 'Debug',
+		program = vim.fn.expand('%:p'),
+		cwd = vim.fn.expand('%:p:h'),
+		port = 9003,
+	}
+}
+------------------ PHP ------------------
+
+Virtual.setup({})
+
+Dapui.setup({
 	layouts = {
 		{
 			elements = {
@@ -87,15 +74,15 @@ dapui.setup({
 					id = "stacks",
 					size = 0.25
 				}, {
-					id = "watches",
-					size = 0.25
-				}, {
-					id = "breakpoints",
-					size = 0.25
-				}, {
-					id = "scopes",
-					size = 0.25
-				}
+				id = "watches",
+				size = 0.25
+			}, {
+				id = "breakpoints",
+				size = 0.25
+			}, {
+				id = "scopes",
+				size = 0.25
+			}
 			},
 			position = "right",
 			size = 40
@@ -103,9 +90,14 @@ dapui.setup({
 		{
 			elements = {
 				{
+					id = "console",
+					size = 0.25
+				},
+				{
 					id = "repl",
-					size = 1
-				}
+					size = 0.75
+				},
+
 			},
 			position = "bottom",
 			size = 10
@@ -113,18 +105,10 @@ dapui.setup({
 	}
 })
 
-dap.listeners.before.attach.dapui_config = function ()
-	dapui.open()
+Dap.listeners.before.attach.dapui_config = function()
+	Dapui.open()
 end
 
-dap.listeners.before.launch.dapui_config = function ()
-	dapui.open()
+Dap.listeners.before.launch.dapui_config = function()
+	Dapui.open()
 end
-
--- dap.listeners.before.event_terminated.dapui_config = function ()
--- 	dapui.close()
--- end
-
--- dap.listeners.before.event_exited.dapui_config = function ()
--- 	dapui.close()
--- end
