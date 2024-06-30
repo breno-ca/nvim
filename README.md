@@ -11,5 +11,5 @@ docker build -t nvim:ubuntu .
 After building a container with a specific OS specified in the Dockerfile, you can run the following command to start a "dev-container" mounted to the current directory and with the SSH agent forwarded to the container. This will allow you to use the SSH keys on your host machine avoinding errors when trying to clone a repository from a private repository. 
 
 ```bash
-docker run -it -v $(pwd):/usr/src/project -v $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent
+docker run -it -v $(pwd):/projects -v $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent
 ```
