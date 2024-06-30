@@ -3,18 +3,17 @@ return {
 	build = ':TSUpdate',
 
 	config = function()
+		local configs = require 'nvim-treesitter.configs'
 
-    	local configs = require'nvim-treesitter.configs'
-
-    	configs.setup{
+		configs.setup {
 			ensure_installed = {
 				'dockerfile', 'gitignore', 'go', 'gomod', 'gowork',
 				'javascript', 'json', 'lua', 'markdown', 'proto',
-				'python', 'ruby', 'sql', 'yaml'
+				'python', 'ruby', 'sql', 'yaml', 'php', 'html', 'css',
 			},
-        	sync_install = false,
-        	highlight = { enable = true },
-        	indent = { enable = true },
-        }
-    end
+			sync_install = false,
+			highlight = { enable = true },
+			indent = { enable = true },
+		}
+	end
 }
