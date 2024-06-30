@@ -1,8 +1,8 @@
-local lspconfig = require'lspconfig'
-local util = require'lspconfig/util'
+local lspconfig = require 'lspconfig'
+local util = require 'lspconfig/util'
 
-local capabilities = require'cmp_nvim_lsp'.default_capabilities()
-local on_attach = require'lsp-format'.on_attach
+local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
+local on_attach = require 'lsp-format'.on_attach
 
 lspconfig.gopls.setup({
 	capabilities = capabilities,
@@ -37,7 +37,7 @@ lspconfig.phpactor.setup({
 
 	cmd = { 'phpactor', 'language-server' },
 	filetypes = { 'php' },
-	root_dir = util.root_pattern('index.php', 'composer.json', '.git'),
+	root_dir = util.root_pattern('index.php', 'server.php', 'composer.json', '.git'),
 
 	settings = {
 		phpactor = {
@@ -60,7 +60,35 @@ lspconfig.phpactor.setup({
 	},
 })
 
-lspconfig.lua_ls.setup({})
+lspconfig.lua_ls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	cmd = { 'lua-language-server' },
+	filetypes = { 'lua' },
+	root_dir = util.root_pattern('.git'),
+
+	settings = {
+		Lua = {
+			diagnostics = {
+				enable = true,
+				globals = {
+					'vim',
+					'nvim',
+				},
+			},
+			workspace = {
+				library = {
+					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
+					[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+				},
+			},
+			format = {
+				enable = true,
+			},
+		},
+	},
+})
 
 lspconfig.bashls.setup({})
 
@@ -68,14 +96,14 @@ lspconfig.jsonls.setup({})
 
 lspconfig.yamlls.setup({})
 
-
+lspconfig.sqls.setup({})
 
 --[[
 Configuração de LSPs (Language Server Protocols)
 
 Cada linguagem a ser utilizada deve conter uma
 chamada setup() para funcionar contendo ou não
-uma table de configurações. 
+uma table de configurações.
 
 Para listar os LSPs disponíveis execute :Mason.
 
