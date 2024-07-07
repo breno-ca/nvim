@@ -23,7 +23,7 @@ end
 
 -- function caller with arguments
 local function call(func, args)
-	return function ()
+	return function()
 		func(args)
 	end
 end
@@ -40,10 +40,10 @@ end
 local n = 'n'
 local i = 'i'
 local t = 't'
-local ni = {'n', 'i'}
-local nv = {'n', 'v'}
-local ntv = {'n', 't', 'v'}
-local niv = {'n', 'i', 'v'}
+local ni = { 'n', 'i' }
+local nv = { 'n', 'v' }
+local ntv = { 'n', 't', 'v' }
+local niv = { 'n', 'i', 'v' }
 -- local nitv = {'n', 'i', 't', 'v'}
 
 
@@ -75,7 +75,7 @@ vim.keymap.set(n, '<A-i>', call(vim.diagnostic.open_float), nsd('Inspect diagnos
 -- show lsp actions
 vim.keymap.set(ni, '<A-a>', call(vim.lsp.buf.code_action), nsd('Show code actions menu'))
 
--- moving lines 
+-- moving lines
 vim.keymap.set(n, '<A-k>', 'dd2kp', nsd('Move current line UP in NORMAL mode'))
 vim.keymap.set(n, '<A-j>', 'ddp', nsd('Move current line DOWN in NORMAL mode'))
 vim.keymap.set(i, '<A-k>', '<Esc>dd2kpi', nsd('Move current line UP in INSERT mode'))
@@ -94,8 +94,9 @@ vim.keymap.set(n, '<A-w>', '<Cmd>NvimTreeFocus<CR>', nsd('Put the cursor in file
 vim.keymap.set(n, '<A-S-w>', '<Cmd>NvimTreeToggle<CR>', nsd('Toggle files tree visibility'))
 
 -- telescope
-local telescope = require'telescope.builtin'
+local telescope = require 'telescope.builtin'
 vim.keymap.set(n, '<A-e>', telescope.find_files, nsd('Search files by name'))
+vim.keymap.set(n, '<A-E>', telescope.git_status, nsd('Search through git status'))
 vim.keymap.set(n, '<A-f>', telescope.live_grep, nsd('Search files with live grep'))
 vim.keymap.set(n, '<A-u>', telescope.lsp_references, nsd('Show LSP references'))
 vim.keymap.set(n, '<A-I>', telescope.lsp_implementations, nsd('Show LSP implementation'))
@@ -109,15 +110,17 @@ vim.keymap.set(n, '<A-q>', '<Cmd>BufferClose<CR>', nsd('Close the current tab'))
 
 -- trouble
 vim.keymap.set(n, '<Leader>w', '<Cmd>Trouble diagnostics toggle focus=true<CR>', nsd('Show workspace diagnostics'))
-vim.keymap.set(n, '<Leader>d', '<Cmd>Trouble diagnostics toggle focus=true filter.buf=0<CR>', nsd('Show current document diagnostics'))
+vim.keymap.set(n, '<Leader>d', '<Cmd>Trouble diagnostics toggle focus=true filter.buf=0<CR>',
+	nsd('Show current document diagnostics'))
 vim.keymap.set(n, '<Leader>q', '<Cmd>Trouble quickfix toggle focus=true<CR>', nsd('Show quickfixes'))
 
 -- nvim-dap
-local dap = require'dap'
-local dapui = require'dapui'
-local widgets = require'dap.ui.widgets'
+local dap = require 'dap'
+local dapui = require 'dapui'
+local widgets = require 'dap.ui.widgets'
 local loginput = function() dap.set_breakpoint(nil, nil, vim.fn.input('Log message: ')) end
 vim.keymap.set(n, '<F5>', call(dap.continue), nsd('Continue/Start Debug Session'))
+vim.keymap.set(n, '<F6>', call(dap.restart), nsd('Restart Debug Session'))
 vim.keymap.set(n, '<F10>', call(dap.step_over), nsd('Step Over'))
 vim.keymap.set(n, '<F11>', call(dap.step_into), nsd('Step Into'))
 vim.keymap.set(n, '<F12>', call(dap.step_out), nsd('Step Out'))
@@ -141,6 +144,5 @@ vim.keymap.set(i, '<A-ç>', 'copilot#Suggest()', nsder('Explicitly request a sug
 vim.keymap.set(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current suggestion'))
 
 -- copilot-chat
-vim.keymap.set(n, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Toggle Copilot Chat'))
+vim.keymap.set(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Toggle Copilot Chat'))
 vim.keymap.set(n, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Copilot Chat'))
-
