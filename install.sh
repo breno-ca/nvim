@@ -21,7 +21,7 @@ sudo apt install ripgrep -y;
 sudo apt install curl -y;
 
 # Baixa e extrai o neovim
-curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz; \
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz; \
 rm -rf /opt/nvim; \
 tar -C /opt -xzf nvim-linux64.tar.gz; \
 
