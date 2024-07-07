@@ -2,8 +2,13 @@ Dap = require 'dap'
 Dapui = require 'dapui'
 Virtual = require 'nvim-dap-virtual-text'
 
+local last_test
 local testname = function()
-	return vim.fn.input('Type the full test name: ')
+	last_test = vim.fn.input('Type the full test name: ')
+	return last_test
+end
+local relaunch_test = function()
+	return last_test
 end
 
 ------------------ GO ------------------
@@ -41,6 +46,18 @@ Dap.configurations.go = {
 		},
 		program = './${relativeFileDirname}',
 	},
+	{
+		type = 'delve',
+		name = 'Relaunch Debug test function',
+		request = 'launch',
+		mode = 'test',
+		args = {
+			'-test.run',
+			relaunch_test,
+		},
+		program = './${relativeFileDirname}',
+	},
+
 }
 ------------------ GO ------------------
 
@@ -56,11 +73,50 @@ Dap.configurations.php = {
 	{
 		type = 'php',
 		request = 'launch',
-		name = 'Debug',
-		program = vim.fn.expand('%:p'),
-		cwd = vim.fn.expand('%:p:h'),
+		name = 'Debug PHP 8.3 (Start builtin server)',
 		port = 9003,
-	}
+		runtimeArgs = {
+			'-S', 'localhost:8080'
+		},
+		preLaunchTask = {
+			type = 'shell',
+			command = 'php -S localhost:8080',
+			presentation = {
+				reveal = 'always',
+				panel = 'new',
+			},
+			group = {
+				kind = 'build',
+				isDefault = true,
+			},
+		},
+	},
+	{
+		type = 'php',
+		request = 'launch',
+		name = 'Debug Laravel (PHP 8.3)',
+		port = 9003,
+		runtimeArgs = {
+			'artisan', 'serve',
+		},
+		preLaunchTask = {
+			type = 'shell',
+			command = 'php artisan serve',
+			presentation = {
+				reveal = 'always',
+				panel = 'new',
+			},
+			group = {
+				kind = 'build',
+				isDefault = true,
+			},
+		},
+		postDebugTask = {
+			type = 'shell',
+			command = 'kill $(lsof -t -i :8000)',
+		},
+
+	},
 }
 ------------------ PHP ------------------
 
