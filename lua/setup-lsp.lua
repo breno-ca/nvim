@@ -90,6 +90,31 @@ lspconfig.lua_ls.setup({
 	},
 })
 
+lspconfig.html.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	filetypes = { 'html' },
+	root_dir = util.root_pattern('index.html', '.git'),
+
+	settings = {
+		html = {
+			suggest = {
+				enable = true,
+			},
+		},
+	},
+
+	init_options = {
+		config = {
+			validate = true,
+			format = {
+				enable = true,
+			},
+		},
+	},
+})
+
 lspconfig.bashls.setup({})
 
 lspconfig.jsonls.setup({})
