@@ -7,13 +7,15 @@ return {
 
 		configs.setup {
 			ensure_installed = {
-				'dockerfile', 'gitignore', 'go', 'gomod', 'gowork',
-				'javascript', 'json', 'lua', 'markdown', 'proto',
-				'python', 'ruby', 'sql', 'yaml', 'php', 'html', 'css',
+				'go', 'php', 'ruby', 'lua', 'javascript',
+				'sql', 'bash', --[['html',--]] 'yaml',
+				'json', 'proto', 'css', 'make',
+				'markdown',
 			},
 			sync_install = false,
 			highlight = { enable = true },
 			indent = { enable = true },
+
 		}
 	end
 }
