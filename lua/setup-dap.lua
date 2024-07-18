@@ -24,20 +24,26 @@ Dap.adapters.delve = {
 Dap.configurations.go = {
 	{
 		type = 'delve',
-		name = 'Debug',
+		name = 'Debug (main)',
+		request = 'launch',
+		program = '${workspaceFolder}/main.go',
+	},
+	{
+		type = 'delve',
+		name = 'Debug File',
 		request = 'launch',
 		program = '${file}',
 	},
 	{
 		type = 'delve',
-		name = 'Debug test',
+		name = 'Debug Test File',
 		request = 'launch',
 		mode = 'test',
 		program = './${relativeFileDirname}',
 	},
 	{
 		type = 'delve',
-		name = 'Debug test function',
+		name = 'Debug Test Function',
 		request = 'launch',
 		mode = 'test',
 		args = {
@@ -48,7 +54,7 @@ Dap.configurations.go = {
 	},
 	{
 		type = 'delve',
-		name = 'Relaunch Debug test function',
+		name = 'Relaunch Debug Test Function',
 		request = 'launch',
 		mode = 'test',
 		args = {
@@ -57,7 +63,6 @@ Dap.configurations.go = {
 		},
 		program = './${relativeFileDirname}',
 	},
-
 }
 ------------------ GO ------------------
 
@@ -120,6 +125,53 @@ Dap.configurations.php = {
 }
 ------------------ PHP ------------------
 
+------------ DART / FLUTTER -------------
+-- Dart CLI adapter (recommended)
+Dap.adapters.dart = {
+	type = 'executable',
+	command = 'dart',
+	args = { 'debug_adapter' },
+	options = {
+		detached = false,
+	}
+}
+Dap.adapters.flutter = {
+	type = 'executable',
+	command = 'flutter',
+	args = { 'debug_adapter' },
+	options = {
+		detached = false,
+	}
+}
+Dap.configurations.dart = {
+	{
+		type = 'dart',
+		request = 'launch',
+		name = 'Launch dart',
+		dartSdkPath = '/home/breno-ca/.puro/envs/helloflutter/flutter/bin/cache/dart-sdk/bin/dart', -- ensure this is correct
+		flutterSdkPath = '/home/breno-ca/.puro/envs/helloflutter/flutter/bin/flutter',        -- ensure this is correct
+		program = '${workspaceFolder}/lib/main.dart',                                         -- ensure this is correct
+		cwd = '${workspaceFolder}',
+		-- deviceId = 'chrome',                                                                  -- specify the device here
+	},
+	{
+		type = 'flutter',
+		request = 'launch',
+		name = 'Launch flutter',
+		dartSdkPath = '/home/breno-ca/.puro/envs/helloflutter/flutter/bin/cache/dart-sdk/bin/dart', -- ensure this is correct
+		flutterSdkPath = '/home/breno-ca/.puro/envs/helloflutter/flutter/bin/flutter',        -- ensure this is correct
+		program = '${workspaceFolder}/lib/main.dart',                                         -- ensure this is correct
+		cwd = '${workspaceFolder}',
+		args = {
+			'-d',
+			'chrome',
+		}
+		-- deviceId = 'chrome',                                                                  -- specify the device here
+	}
+}
+
+------------ DART / FLUTTER -------------
+
 Virtual.setup({})
 
 Dapui.setup({
@@ -127,35 +179,35 @@ Dapui.setup({
 		{
 			elements = {
 				{
-					id = "stacks",
+					id = 'stacks',
 					size = 0.25
 				}, {
-				id = "watches",
+				id = 'watches',
 				size = 0.25
 			}, {
-				id = "breakpoints",
+				id = 'breakpoints',
 				size = 0.25
 			}, {
-				id = "scopes",
+				id = 'scopes',
 				size = 0.25
 			}
 			},
-			position = "right",
+			position = 'right',
 			size = 40
 		},
 		{
 			elements = {
 				{
-					id = "console",
+					id = 'console',
 					size = 0.25
 				},
 				{
-					id = "repl",
+					id = 'repl',
 					size = 0.75
 				},
 
 			},
-			position = "bottom",
+			position = 'bottom',
 			size = 10
 		}
 	}
