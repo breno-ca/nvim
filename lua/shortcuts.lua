@@ -40,6 +40,8 @@ end
 local n = 'n'
 local i = 'i'
 local t = 't'
+local v = 'v'
+local xo = { 'x', 'o' }
 local ni = { 'n', 'i' }
 local nv = { 'n', 'v' }
 local ntv = { 'n', 't', 'v' }
@@ -146,3 +148,21 @@ vim.keymap.set(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current sugg
 -- copilot-chat
 vim.keymap.set(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Toggle Copilot Chat'))
 vim.keymap.set(n, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Copilot Chat'))
+
+-- centerpad
+vim.keymap.set(n, '<Leader>cb', '<Cmd>Centerpad 46 46<CR>', nsd('Centerpad the current buffer'))
+
+-- hurl
+vim.keymap.set(n, '<Leader>h', '<Cmd>HurlRunner<CR>', nsd('Run all requests'))
+vim.keymap.set(n, '<Leader>a', '<Cmd>HurlRunnerAt<CR>', nsd('Run API request'))
+vim.keymap.set(n, '<Leader>te', '<Cmd>HurlRunnerToEntry<CR>', nsd('Run API request to entry'))
+vim.keymap.set(n, '<Leader>tm', '<Cmd>HurlToggleMode<CR>', nsd('Toggle Hurl mode'))
+vim.keymap.set(n, '<Leader>tv', '<Cmd>HurlVerbose<CR>', nsd('Run API in verbose mode'))
+vim.keymap.set(v, '<Leader>h', '<Cmd>HurlRunner<CR>', nsd('Run Hurl request in visual mode'))
+vim.keymap.set(n, '<Leader>mv', '<Cmd>HurlManageVariable<CR>', nsd('Manage Hurl variables'))
+
+-- leap
+vim.keymap.set(n, 's', '<Plug>(leap)', nsd('Leap to a word'))
+vim.keymap.set(n, 'S', '<Plug>(leap-from-window)', nsd('Leap to a word from another window'))
+vim.keymap.set(xo, 's', '<Plug>(leap-forward)', nsd('Leap to a word forward '))
+vim.keymap.set(xo, 'S', '<Plug>(leap-backward)', nsd('Leap to a word backward'))
