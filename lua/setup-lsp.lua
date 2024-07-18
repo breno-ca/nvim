@@ -1,8 +1,14 @@
 local lspconfig = require 'lspconfig'
 local util = require 'lspconfig/util'
+local api = vim.api
 
 local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
 local on_attach = require 'lsp-format'.on_attach
+
+capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
 
 lspconfig.gopls.setup({
 	capabilities = capabilities,
@@ -114,6 +120,74 @@ lspconfig.html.setup({
 		},
 	},
 })
+
+
+
+-- local namespace = api.nvim_create_namespace("flutter_tools_closing_labels")
+
+-- lspconfig.dartls.setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+--
+-- 	filetypes = { 'dart' },
+-- 	root_dir = util.root_pattern('pubspec.yaml', '.git'),
+--
+-- 	init_options = {
+-- 		onlyAnalyzeProjectsWithOpenFiles = true,
+-- 		suggestFromUnimportedLibraries = true,
+-- 		closingLabels = true,
+-- 		outline = true,
+-- 		flutterOutline = true,
+-- 	},
+-- 	settings = {
+-- 		dart = {
+-- 			completeFunctionCalls = true,
+-- 			showTodos = true,
+-- 			dartEnableSdkFormatter = true,
+-- 			updateImportsOnRename = true,
+-- 			enableSnippets = true,
+-- 			documentation = true,
+-- 		},
+-- 		flutter = {
+-- 			previewHotReloadOnSave = true,
+-- 		},
+-- 	},
+-- 	handlers = {
+-- 		-- other handlers...
+-- 		['dart/textDocument/publishClosingLabels'] = function(err, response, _)
+-- 			local api = vim.api
+-- 			local namespace = api.nvim_create_namespace("flutter_tools_closing_labels")
+-- 			local function render_labels(labels, opts)
+-- 				api.nvim_buf_clear_namespace(0, namespace, 0, -1)
+-- 				opts = opts or {}
+-- 				local highlight = opts and opts.highlight or "Comment"
+-- 				local prefix = opts and opts.prefix or "// "
+--
+-- 				for _, item in ipairs(labels) do
+-- 					local line = tonumber(item.range["end"].line)
+-- 					if line <= api.nvim_buf_line_count(0) then
+-- 						api.nvim_buf_set_extmark(0, namespace, line, -1, {
+-- 							virt_text = { {
+-- 								prefix .. item.label,
+-- 								highlight,
+-- 							} },
+-- 							virt_text_pos = "eol",
+-- 							hl_mode = "combine",
+-- 						})
+-- 					end
+-- 				end
+-- 			end
+--
+-- 			local opts = { enabled = true, highlight = "Comment", prefix = "// " } -- substitua por suas configurações
+-- 			if err or not opts.enabled then return end
+-- 			local uri = response.uri
+-- 			if uri ~= vim.uri_from_bufnr(0) then return end
+-- 			render_labels(response.labels, opts)
+-- 		end,
+-- 		-- other handlers...
+-- 	},
+--
+-- })
 
 lspconfig.bashls.setup({})
 
