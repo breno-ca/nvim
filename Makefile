@@ -1,6 +1,9 @@
 install-cmake:
 	sudo apt install cmake -y
 
+install-xsel:
+	sudo apt install xsel -y
+
 install-ripgrep:
 	sudo apt install ripgrep -y
 
