@@ -6,11 +6,13 @@ vim.opt.termguicolors = true
 vim.g.floaterm_height = 0.9
 vim.g.floaterm_width = 0.9
 vim.g.python3_host_prog = '/usr/local/bin/python3.12'
+vim.cmd('set clipboard+=unnamedplus')
 vim.cmd('set nofixendofline')
 vim.cmd('set linebreak')
 vim.cmd('set number')
--- vim.opt.noequalalways = true
+vim.cmd("let mapleader = ' '")
 
+-- opções de inicialização
 vim.cmd('autocmd VimEnter * NvimTreeOpen')
 vim.cmd('autocmd VimEnter * wincmd w')
 
