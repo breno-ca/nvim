@@ -1,5 +1,6 @@
 return {
 	'nvim-treesitter/nvim-treesitter',
+	lazy = false,
 	build = ':TSUpdate',
 
 	config = function()
@@ -8,7 +9,7 @@ return {
 
 		-- Function to get the language of a buffer
 		local function get_language(bufnr)
-			return api.nvim_buf_get_option(bufnr, 'filetype')
+			return vim.api.nvim_buf_get_option(bufnr, 'filetype')
 		end
 
 		-- Table of functions for each language
@@ -31,7 +32,7 @@ return {
 				'go', 'php', 'ruby', 'lua', 'javascript', 'dart',
 				'sql', 'bash', 'html', 'yaml',
 				'json', 'proto', 'css', 'make', 'dockerfile',
-				'markdown', 'hurl',
+				'markdown', 'hurl', 'scheme', 'query',
 			},
 
 			indent = { enable = true },
@@ -51,6 +52,12 @@ return {
 					-- If no function was found for the current language, return false
 					return false
 				end,
+			},
+			inject = {
+				enable = true,
+				languages = {
+					javascript = { "css" },
+				}
 			},
 		}
 	end
