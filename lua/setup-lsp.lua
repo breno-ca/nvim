@@ -100,27 +100,33 @@ lspconfig.html.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 
-	filetypes = { 'html' },
+	filetypes = { 'html', 'javascript' },
 	root_dir = util.root_pattern('index.html', '.git'),
-
-	settings = {
-		html = {
-			suggest = {
-				enable = true,
-			},
-		},
-	},
-
-	init_options = {
-		config = {
-			validate = true,
-			format = {
-				enable = true,
-			},
-		},
-	},
 })
 
+lspconfig.cssls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	cmd = { 'css-languageserver', '--stdio' },
+	filetypes = { 'css', 'javascript' },
+})
+
+lspconfig.quick_lint_js.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	filetypes = { 'javascript' },
+})
+
+-- lspconfig.tsserver.setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+--
+-- 	cmd = { 'typescript-language-server', '--stdio' },
+-- 	filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+-- 	root_dir = util.root_pattern('package.json', '.git'),
+-- })
 
 
 -- local namespace = api.nvim_create_namespace("flutter_tools_closing_labels")
