@@ -74,8 +74,11 @@ vim.keymap.set(i, '<A-j>', '<Esc>ddpi', nsd('Move current line UP in INSERT mode
 vim.keymap.set(i, '<A-CR>', '<C-o>o', nsd('Go to a new line below current line in INSERT mode'))
 vim.keymap.set(i, '<A-]>', '<C-o>O', nsd('Add a new line in current line in INSERT mode'))
 
+-- commenting lines
+-- vim.keymap.set(n, '<Leader>;', 'gcE', nsd('Toggle comment in current line'))
+
 -- formatting
-vim.keymap.set(v, '<Leader>fj', '<Cmd>%V!jq<CR>', nsd('Format JSON in visual mode'))
+vim.keymap.set(v, '<Leader>fj', ':!jq .<CR>', nsd('Format JSON in visual mode'))
 
 -- buffer splitting
 vim.keymap.set(n, '<Leader>s', '<Cmd>vsplit<CR>', nsd('Split buffer window vertically'))
