@@ -119,6 +119,27 @@ lspconfig.quick_lint_js.setup({
 	filetypes = { 'javascript' },
 })
 
+lspconfig.pyright.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	cmd = { 'pyright-langserver', '--stdio' },
+	filetypes = { 'python' },
+	root_dir = util.root_pattern('requirements.txt', '.git'),
+
+	settings = {
+		python = {
+			analysis = {
+				autoSearchPaths = true,
+				useLibraryCodeForTypes = true,
+			},
+			workspaceSymbols = {
+				detectRelativeImports = true,
+			},
+		},
+	},
+})
+
 -- lspconfig.tsserver.setup({
 -- 	capabilities = capabilities,
 -- 	on_attach = on_attach,
@@ -195,7 +216,20 @@ lspconfig.quick_lint_js.setup({
 --
 -- })
 
-lspconfig.bashls.setup({})
+lspconfig.bashls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	cmd = { 'bash-language-server', 'start' },
+	filetypes = { 'sh', 'bash' },
+	root_dir = util.root_pattern('.git'),
+
+	init_options = {
+		format = {
+			enable = true,
+		},
+	},
+})
 
 lspconfig.jsonls.setup({})
 
