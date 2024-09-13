@@ -17,7 +17,7 @@ return {
 			html = function(bufnr)
 				local lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
 				for _, line in ipairs(lines) do
-					if #line > 500 then
+					if #line > 2900 then
 						return true
 					end
 				end
@@ -57,6 +57,8 @@ return {
 				enable = true,
 				languages = {
 					javascript = { "css" },
+					go = { "sql" },
+					lua = { "query" },
 				}
 			},
 		}
