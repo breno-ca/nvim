@@ -79,8 +79,8 @@ vim.keymap.set(v, '<Leader>fj', '<Cmd>%V!jq<CR>', nsd('Format JSON in visual mod
 
 -- buffer splitting
 vim.keymap.set(n, '<Leader>s', '<Cmd>vsplit<CR>', nsd('Split buffer window vertically'))
-vim.keymap.set(n, '<Leader>hs', '<Cmd>split<CR>', nsd('Split buffer window horizontally'))
-vim.keymap.set(n, '<Leader>x', '<Cmd>split<CR>', nsd('Swap buffer windows'))
+vim.keymap.set(n, '<Leader>x', '<Cmd>split<CR>', nsd('Split buffer window horizontally'))
+vim.keymap.set(n, '<Leader>S', '<Cmd>wincmd x<CR>', nsd('Swap buffer windows'))
 
 -- buffer sizing
 vim.keymap.set(n, '<A-->', '<C-w><', nsd('Decrease buffer window width'))
