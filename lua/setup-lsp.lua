@@ -140,6 +140,27 @@ lspconfig.pyright.setup({
 	},
 })
 
+lspconfig.bashls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	cmd = { 'bash-language-server', 'start' },
+	filetypes = { 'sh', 'bash' },
+	root_dir = util.root_pattern('.git'),
+
+	init_options = {
+		format = {
+			enable = true,
+		},
+	},
+})
+
+lspconfig.jsonls.setup({})
+
+lspconfig.yamlls.setup({})
+
+lspconfig.sqls.setup({})
+
 -- lspconfig.tsserver.setup({
 -- 	capabilities = capabilities,
 -- 	on_attach = on_attach,
@@ -216,26 +237,6 @@ lspconfig.pyright.setup({
 --
 -- })
 
-lspconfig.bashls.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-
-	cmd = { 'bash-language-server', 'start' },
-	filetypes = { 'sh', 'bash' },
-	root_dir = util.root_pattern('.git'),
-
-	init_options = {
-		format = {
-			enable = true,
-		},
-	},
-})
-
-lspconfig.jsonls.setup({})
-
-lspconfig.yamlls.setup({})
-
-lspconfig.sqls.setup({})
 
 --[[
 Configuração de LSPs (Language Server Protocols)

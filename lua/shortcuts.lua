@@ -11,6 +11,11 @@ local function nsder(description)
 	return { noremap = true, silent = true, desc = description, expr = true, replace_keycodes = false }
 end
 
+-- noremap, silent, nowait, description, expression, replace keycodes
+local function nsnder(description)
+	return { noremap = true, silent = true, nowait = true, desc = description, expr = true, replace_keycodes = false }
+end
+
 -- function caller with arguments
 local function call(func, args)
 	return function() func(args) end
@@ -150,15 +155,24 @@ vim.keymap.set(ntv, '<A-1>', '<Cmd>:FloatermPrev<CR>', nsd('Go to the next termi
 vim.keymap.set(ntv, '<A-2>', '<Cmd>:FloatermNext<CR>', nsd('Go to the previous terminal'))
 
 -- copilot
-vim.keymap.set(i, '<A-;>', 'copilot#Accept("<CR>")', nsder('Apply suggestion'))
-vim.keymap.set(i, '<A-Down>', 'copilot#Next()', nsder('Cycle to the next suggestion, if one is available'))
-vim.keymap.set(i, '<A-Up>', 'copilot#Previous()', nsder('Cycle to the previous suggestion'))
-vim.keymap.set(i, '<A-ç>', 'copilot#Suggest()', nsder('Explicitly request a suggestion'))
-vim.keymap.set(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current suggestion'))
+-- vim.keymap.set(i, '<A-;>', 'copilot#Accept("<CR>")', nsder('Apply suggestion'))
+-- vim.keymap.set(i, '<A-Down>', 'copilot#Next()', nsder('Cycle to the next suggestion, if one is available'))
+-- vim.keymap.set(i, '<A-Up>', 'copilot#Previous()', nsder('Cycle to the previous suggestion'))
+-- vim.keymap.set(i, '<A-ç>', 'copilot#Suggest()', nsder('Explicitly request a suggestion'))
+-- vim.keymap.set(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current suggestion'))
 
 -- copilot-chat
-vim.keymap.set(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Toggle Copilot Chat'))
-vim.keymap.set(n, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Copilot Chat'))
+-- vim.keymap.set(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Toggle Copilot Chat'))
+-- vim.keymap.set(n, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Copilot Chat'))
+
+-- codeium
+-- local neocodeium = require 'neocodeium'
+-- vim.keymap.set(i, '<A-;>', call(neocodeium.accept), nsd('Apply suggestion'))
+-- vim.keymap.set(i, '<A-Right>', call(neocodeium.accept_word), nsd('Accept word from suggestion'))
+-- vim.keymap.set(i, '<A-Up>', call(neocodeium.cycle, -1), nsd('Cycle to the prevous suggestion'))
+-- vim.keymap.set(i, '<A-Down>', call(neocodeium.cycle_or_complete, 1), nsd('Cycle to the next suggestion'))
+-- vim.keymap.set(i, '<A-ç>', call(neocodeium.clear), nsd('Clear current suggestion'))
+-- vim.keymap.set(n, '<Leader>cc', '<Cmd>NeoCodeium chat<CR>', nsd('Open Codeium chat window'))
 
 -- centerpad
 vim.keymap.set(n, '<Leader>cb', '<Cmd>Centerpad 46 46<CR>', nsd('Centerpad the current buffer'))
