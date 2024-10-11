@@ -16,14 +16,6 @@ local function call(func, args)
 	return function() func(args) end
 end
 
--- -- vimscript input wrapper
--- local function vimscript_input(vimscript)
--- 	return function ()
--- 		local input = '("' .. vim.fn.input('Request suggestion: ') .. '")'
--- 		return vimscript .. input
--- 	end
--- end
-
 -- mode alias
 local n = 'n'
 local i = 'i'
@@ -149,16 +141,14 @@ vim.keymap.set(ntv, '<A-3>', '<Cmd>:FloatermNew<CR>', nsd('Open a new terminal s
 vim.keymap.set(ntv, '<A-1>', '<Cmd>:FloatermPrev<CR>', nsd('Go to the next terminal'))
 vim.keymap.set(ntv, '<A-2>', '<Cmd>:FloatermNext<CR>', nsd('Go to the previous terminal'))
 
--- copilot
-vim.keymap.set(i, '<A-;>', 'copilot#Accept("<CR>")', nsder('Apply suggestion'))
-vim.keymap.set(i, '<A-Down>', 'copilot#Next()', nsder('Cycle to the next suggestion, if one is available'))
-vim.keymap.set(i, '<A-Up>', 'copilot#Previous()', nsder('Cycle to the previous suggestion'))
-vim.keymap.set(i, '<A-ç>', 'copilot#Suggest()', nsder('Explicitly request a suggestion'))
-vim.keymap.set(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current suggestion'))
-
--- copilot-chat
-vim.keymap.set(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Toggle Copilot Chat'))
-vim.keymap.set(n, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Copilot Chat'))
+-- codeium
+local neocodeium = require 'neocodeium'
+vim.keymap.set(i, '<A-;>', call(neocodeium.accept), nsd('Apply suggestion'))
+vim.keymap.set(i, '<A-Right>', call(neocodeium.accept_word), nsd('Accept word from suggestion'))
+vim.keymap.set(i, '<A-Up>', call(neocodeium.cycle, -1), nsd('Cycle to the prevous suggestion'))
+vim.keymap.set(i, '<A-Down>', call(neocodeium.cycle_or_complete, 1), nsd('Cycle to the next suggestion'))
+vim.keymap.set(i, '<A-ç>', call(neocodeium.clear), nsd('Clear current suggestion'))
+vim.keymap.set(n, '<Leader>cc', '<Cmd>NeoCodeium chat<CR>', nsd('Open Codeium chat window'))
 
 -- centerpad
 vim.keymap.set(n, '<Leader>cb', '<Cmd>Centerpad 46 46<CR>', nsd('Centerpad the current buffer'))
@@ -178,3 +168,16 @@ vim.keymap.set(n, 's', '<Plug>(leap)', nsd('Leap to a word'))
 vim.keymap.set(n, 'S', '<Plug>(leap-from-window)', nsd('Leap to a word from another window'))
 vim.keymap.set(xo, 's', '<Plug>(leap-forward)', nsd('Leap to a word forward '))
 vim.keymap.set(xo, 'S', '<Plug>(leap-backward)', nsd('Leap to a word backward'))
+
+-- unused ------------
+--
+-- copilot
+-- vim.keymap.set(i, '<A-;>', 'copilot#Accept("<CR>")', nsder('Apply suggestion'))
+-- vim.keymap.set(i, '<A-Down>', 'copilot#Next()', nsder('Cycle to the next suggestion, if one is available'))
+-- vim.keymap.set(i, '<A-Up>', 'copilot#Previous()', nsder('Cycle to the previous suggestion'))
+-- vim.keymap.set(i, '<A-ç>', 'copilot#Suggest()', nsder('Explicitly request a suggestion'))
+-- vim.keymap.set(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current suggestion'))
+
+-- copilot-chat
+-- vim.keymap.set(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Toggle Copilot Chat'))
+-- vim.keymap.set(n, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Copilot Chat'))
