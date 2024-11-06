@@ -3,5 +3,10 @@ return {
 	event = 'VeryLazy',
 	config = function()
 		neocodeium = require('neocodeium').setup()
-	end,
+		-- neocodeium = require('neocodeium').setup({
+		-- 	silent = true,
+		-- })
+		--
+		-- vim.cmd('NeoCodeium! disable')
+	end
 }
