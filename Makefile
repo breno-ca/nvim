@@ -11,9 +11,10 @@ install-curl:
 	sudo apt install curl -y
 
 install-hurl:
-	VERSION=4.3.0; \
-	curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$(VERSION)/hurl_$(VERSION)_amd64.deb; \
-	sudo apt update && sudo apt install ./hurl_$(VERSION)_amd64.deb
+	VERSION="5.0.1"; \
+	DOWNLOAD_LINK=https://github.com/Orange-OpenSource/hurl/releases/download/"$$VERSION"/hurl_"$$VERSION"_amd64.deb; \
+	curl -LO $$DOWNLOAD_LINK; \
+	sudo apt install ./hurl_"$$VERSION"_amd64.deb; \
 
 install-git:
 	sudo add-apt-repository ppa:git-core/ppa;
