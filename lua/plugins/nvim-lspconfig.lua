@@ -1,3 +1,4 @@
 return {
-	'neovim/nvim-lspconfig'
+	'neovim/nvim-lspconfig',
+	tag = 'v1.0.0'
 }
