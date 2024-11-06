@@ -30,9 +30,10 @@ return {
 			sync_install = false,
 			ensure_installed = {
 				'go', 'php', 'ruby', 'lua', 'javascript', 'dart',
-				'sql', 'bash', 'html', 'yaml',
+				'sql', 'bash', 'html', 'yaml', 'vim',
 				'json', 'proto', 'css', 'make', 'dockerfile',
 				'markdown', 'hurl', 'scheme', 'query',
+				'gomod', 'gosum',
 			},
 
 			indent = { enable = true },
@@ -56,9 +57,10 @@ return {
 			inject = {
 				enable = true,
 				languages = {
-					javascript = { "css" },
-					go = { "sql" },
-					lua = { "query" },
+					javascript = { 'css' },
+					go = { 'sql' },
+					lua = { 'query', 'bash', 'vim' },
+					bash = { 'bash' }
 				}
 			},
 		}
