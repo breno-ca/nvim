@@ -1,35 +1,38 @@
-;SQL highlight injection for string literals
-(call_expression
-  function: (selector_expression
-    field: (field_identifier) @field
-    (#eq? @field "Prepare")
-  )
+;;; SQL Highlight
+; In strings
+(
+  [
+    (raw_string_literal)
+    (interpreted_string_literal)
+  ] @injection.content
 
-  arguments: (argument_list
-    (raw_string_literal) @injection.content 
-    (#set! injection.language "sql")
+  (#offset! @injection.content 0 1 0 -1)
+  (#match? @injection.content
+    "(SELECT|INSERT|UPDATE|DELETE|WHERE|JOIN).+(FROM|VALUES|SET|ON)?"
+  )
+  (#set! injection.language "sql")
+)
+
+;;; JSON Highlight
+; In strings
+(
+  (expression_list
+    (raw_string_literal) @injection.content
+
+    (#match? @injection.content ".*[{\\[\\]}:,\"].*")
+    (#set! injection.language "json")
   )
 )
 
-;XML highlight injection for string literals
-(var_declaration 
-  (var_spec 
-    name: (identifier) 
-    type: (type_identifier) 
-    value: (expression_list 
-      (raw_string_literal) @injection.content
-      (#match? @injection.content ".*<\\?xml.*")
-      (#set! injection.language "xml")
-    )
-  )
-)
-
-;JSON highlight injection for string literals
-;(keyed_element
-;  (literal_element
-;    (raw_string_literal) @injection.content
-;    (#match? @injection.content ".*[{\\[\\]}:,\"].*")
-;    (#set! injection.content "json")
+;;XML highlight injection for string literals
+;(var_declaration
+;  (var_spec
+;    name: (identifier)
+;    type: (type_identifier)
+;    value: (expression_list
+;      (raw_string_literal) @injection.content
+;      (#match? @injection.content ".*<\\?xml.*")
+;      (#set! injection.language "xml")
+;    )
 ;  )
 ;)
-
