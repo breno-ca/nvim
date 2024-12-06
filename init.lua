@@ -6,6 +6,7 @@ vim.opt.termguicolors = true
 vim.g.floaterm_height = 0.9
 vim.g.floaterm_width = 0.9
 vim.g.python3_host_prog = '/usr/local/bin/python3.12'
+vim.g.gitblame_enabled = 0
 vim.cmd('set clipboard+=unnamedplus')
 vim.cmd('set nofixendofline')
 vim.cmd('set linebreak')
