@@ -41,48 +41,36 @@ vim.keymap.set(i, '<Down>', '<C-o>gj', nsd('Move DOWN through virtual lines in I
 -----------------------------------------------
 -- shortcuts
 
--- undo
-vim.keymap.set(niv, '<A-z>', '<Cmd>undo<CR>', nsd('Undo last change'))
+-- neovim actions
+vim.keymap.set(n, '<Leader>vl', '<Cmd>set wrap!<CR>', nsd('Toggle line wrapping'))
 
--- redo
-vim.keymap.set(niv, '<A-Z>', '<Cmd>redo<CR>', nsd('Redo last change'))
-
--- save
-vim.keymap.set(niv, '<A-s>', '<Cmd>w<CR>', nsd('Save changes in current file'))
-
--- inspect diagnostic messages
+-- code actions
 vim.keymap.set(n, '<A-i>', call(vim.diagnostic.open_float), nsd('Inspect diagnostics'))
-
--- show lsp actions
 vim.keymap.set(ni, '<A-a>', call(vim.lsp.buf.code_action), nsd('Show code actions menu'))
-
 -- moving lines
 vim.keymap.set(n, '<A-k>', 'ddkP', nsd('Move current line UP in NORMAL mode'))
 vim.keymap.set(n, '<A-j>', 'ddp', nsd('Move current line DOWN in NORMAL mode'))
 vim.keymap.set(i, '<A-k>', '<Esc>ddkPi', nsd('Move current line UP in INSERT mode'))
 vim.keymap.set(i, '<A-j>', '<Esc>ddpi', nsd('Move current line UP in INSERT mode'))
-
 -- adding lines
-vim.keymap.set(i, '<A-CR>', '<C-o>o', nsd('Go to a new line below current line in INSERT mode'))
-vim.keymap.set(i, '<A-]>', '<C-o>O', nsd('Add a new line in current line in INSERT mode'))
-
--- commenting lines
--- vim.keymap.set(n, '<Leader>;', 'gcE', nsd('Toggle comment in current line'))
-
+vim.keymap.set(i, '<A-CR>', '<C-o>o', nsd('Add a new line below in INSERT mode'))
+vim.keymap.set(i, '<A-]>', '<C-o>O', nsd('Add a new line in INSERT mode'))
 -- formatting
 vim.keymap.set(v, '<Leader>fj', ':!jq .<CR>', nsd('Format JSON in visual mode'))
 
+-- buffer actions
+vim.keymap.set(niv, '<A-z>', '<Cmd>undo<CR>', nsd('Undo last change'))
+vim.keymap.set(niv, '<A-Z>', '<Cmd>redo<CR>', nsd('Redo last change'))
+vim.keymap.set(niv, '<A-s>', '<Cmd>w<CR>', nsd('Save changes in current file'))
 -- buffer splitting
 vim.keymap.set(n, '<Leader>s', '<Cmd>vsplit<CR>', nsd('Split buffer window vertically'))
 vim.keymap.set(n, '<Leader>x', '<Cmd>split<CR>', nsd('Split buffer window horizontally'))
 vim.keymap.set(n, '<Leader>S', '<Cmd>wincmd x<CR>', nsd('Swap buffer windows'))
-
 -- buffer sizing
 vim.keymap.set(n, '<A-->', '<C-w><', nsd('Decrease buffer window width'))
 vim.keymap.set(n, '<A-=>', '<C-w>>', nsd('Increase buffer window width'))
 vim.keymap.set(n, '<A-_>', '<C-w>-', nsd('Decrease buffer window height'))
 vim.keymap.set(n, '<A-+>', '<C-w>+', nsd('Increase buffer window height'))
-
 -- buffer movement
 vim.keymap.set(n, '<Leader><Leader>', '<Cmd>wincmd w<CR>', nsd('Cycle through buffers'))
 vim.keymap.set(n, '<Leader><Up>', '<Cmd>wincmd k<CR>', nsd('Move to the buffer above'))
