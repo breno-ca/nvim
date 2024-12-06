@@ -8,7 +8,7 @@
 
   (#offset! @injection.content 0 1 0 -1)
   (#match? @injection.content
-    "(SELECT|INSERT|UPDATE|DELETE|WHERE|JOIN).+(FROM|VALUES|SET|ON)?"
+    "(SELECT|INSERT|REPLACE|UPDATE|DELETE|WHERE|JOIN).+(FROM|VALUES|SET|ON)?"
   )
   (#set! injection.language "sql")
 )
