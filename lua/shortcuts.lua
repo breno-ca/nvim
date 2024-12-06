@@ -169,6 +169,9 @@ vim.keymap.set(n, 'S', '<Plug>(leap-from-window)', nsd('Leap to a word from anot
 vim.keymap.set(xo, 's', '<Plug>(leap-forward)', nsd('Leap to a word forward '))
 vim.keymap.set(xo, 'S', '<Plug>(leap-backward)', nsd('Leap to a word backward'))
 
+-- gitblame
+vim.keymap.set(n, '<Leader>gb', '<Cmd>GitBlameToggle<CR>', nsd('Toggle gitblame comments visibility'))
+
 -- unused ------------
 --
 -- copilot
