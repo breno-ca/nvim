@@ -108,7 +108,6 @@ lspconfig.cssls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 
-	cmd = { 'css-languageserver', '--stdio' },
 	filetypes = { 'css', 'javascript' },
 })
 
