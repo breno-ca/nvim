@@ -10,6 +10,7 @@ vim.g.gitblame_enabled = 0
 vim.cmd('set clipboard+=unnamedplus')
 vim.cmd('set nofixendofline')
 vim.cmd('set linebreak')
+vim.cmd('set wrap!')
 vim.cmd('set number')
 vim.cmd("let mapleader = ' '")
 
@@ -20,6 +21,13 @@ vim.cmd('autocmd VimEnter * wincmd w')
 -- configurações recomendadas para o nvim-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+-- adição de filetypes
+vim.filetype.add({
+	filename = {
+		["docker-compose.yml"] = "yaml.docker-compose",
+	}
+})
 
 -- lazy.nvim para gerenciamento de plugins
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -51,4 +59,4 @@ require 'setup'
 require 'setup-lsp'
 
 -- carrega as configurações de debug
-require 'setup-dap'
+-- require 'setup-dap'
