@@ -108,7 +108,7 @@ lspconfig.cssls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 
-	filetypes = { 'css', 'javascript' },
+	filetypes = { 'css', 'scss', 'javascript' },
 })
 
 lspconfig.quick_lint_js.setup({
@@ -139,14 +139,20 @@ lspconfig.pyright.setup({
 	},
 })
 
--- lspconfig.tsserver.setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
---
--- 	cmd = { 'typescript-language-server', '--stdio' },
--- 	filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
--- 	root_dir = util.root_pattern('package.json', '.git'),
--- })
+lspconfig.ts_ls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+
+	-- cmd = { 'typescript-language-server', '--stdio' },
+	-- root_dir = util.root_pattern('package.json', '.git'),
+	-- filetypes = {
+	-- 	'javascript', 'javascriptreact', 'javascript.jsx',
+	-- 	'typescript', 'typescriptreact', 'typescript.tsx'
+	-- },
+	settings = { typescript = { format = { enable = true } } },
+})
+
+lspconfig.eslint.setup({})
 
 
 -- local namespace = api.nvim_create_namespace("flutter_tools_closing_labels")
@@ -232,9 +238,24 @@ lspconfig.bashls.setup({
 
 lspconfig.jsonls.setup({})
 
-lspconfig.yamlls.setup({})
+-- lspconfig.yamlls.setup({})
 
 lspconfig.sqls.setup({})
+
+lspconfig.dockerls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+lspconfig.docker_compose_language_service.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
+-- lspconfig.angularls.setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- })
 
 --[[
 Configuração de LSPs (Language Server Protocols)
