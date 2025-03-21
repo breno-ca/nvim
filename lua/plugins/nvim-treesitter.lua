@@ -5,15 +5,14 @@ return {
 
 	config = function()
 		local configs = require 'nvim-treesitter.configs'
-		local api = vim.api -- Add this line to access Neovim API
 
 		local function get_language(bufnr)
-			return vim.api.nvim_buf_get_option(bufnr, 'filetype')
+			return vim.bo[bufnr].filetype
 		end
 
 		local language_functions = {
 			html = function(bufnr)
-				local lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
+				local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 				for _, line in ipairs(lines) do
 					if #line > 2900 then
 						return true
@@ -22,7 +21,7 @@ return {
 				return false
 			end,
 			json = function(bufnr)
-				local lines = api.nvim_buf_get_lines(bufnr, 0, -1, false)
+				local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 				for _, line in ipairs(lines) do
 					if #line > 2900 then
 						return true
@@ -57,13 +56,14 @@ return {
 					return false
 				end,
 			},
-			inject = {
+			injections = {
 				enable = true,
 				languages = {
 					javascript = { 'css' },
-					go = { 'sql' },
+					go = { 'sql', 'json' },
 					lua = { 'query', 'bash', 'vim' },
-					bash = { 'bash' }
+					bash = { 'bash' },
+					-- typescript = { 'html' },
 				}
 			},
 		}
