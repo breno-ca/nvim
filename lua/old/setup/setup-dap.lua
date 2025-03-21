@@ -17,7 +17,7 @@ Dap.adapters.delve = {
 	port = '${port}',
 	executable = {
 		command = 'dlv',
-		args = { 'dap', '-l', '127.0.0.1:${port}' },
+		args = { 'dap', '-l', '127.0.0.1:${port}', "--log" },
 	}
 }
 
@@ -26,18 +26,23 @@ Dap.configurations.go = {
 		type = 'delve',
 		name = 'Debug (main)',
 		request = 'launch',
+		outputMode = 'remote',
+		mode = 'debug',
 		program = '${workspaceFolder}/main.go',
 	},
 	{
 		type = 'delve',
 		name = 'Debug File',
 		request = 'launch',
+		outputMode = 'remote',
+		mode = 'debug',
 		program = '${file}',
 	},
 	{
 		type = 'delve',
 		name = 'Debug Test File',
 		request = 'launch',
+		outputMode = 'remote',
 		mode = 'test',
 		program = './${relativeFileDirname}',
 	},
@@ -45,6 +50,7 @@ Dap.configurations.go = {
 		type = 'delve',
 		name = 'Debug Test Function',
 		request = 'launch',
+		outputMode = 'remote',
 		mode = 'test',
 		args = {
 			'-test.run',
@@ -56,6 +62,7 @@ Dap.configurations.go = {
 		type = 'delve',
 		name = 'Relaunch Debug Test Function',
 		request = 'launch',
+		outputMode = 'remote',
 		mode = 'test',
 		args = {
 			'-test.run',
