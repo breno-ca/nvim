@@ -7,13 +7,11 @@ return {
 		'benfowler/telescope-luasnip.nvim',
 	},
 
-	opts = {
-		history = true,
-		updateevents = 'TextChanged,TextChangedI',
-	},
-
-	config = function(_, opts)
-		require'luasnip'.config.setup(opts)
-		require'luasnip.loaders.from_vscode'.lazy_load()
+	config = function()
+		require 'luasnip'.config.set_config({
+			region_check_events = "InsertEnter",
+			delete_check_events = "TextChanged,InsertLeave",
+		})
+		require 'luasnip.loaders.from_vscode'.lazy_load()
 	end
 }

@@ -12,6 +12,8 @@ return {
 	config = function()
 		local cmp = require 'cmp'
 		local luasnip = require 'luasnip'
+		local forward = 1
+		local backward = -1
 
 		cmp.setup({
 			snippet = {
@@ -32,18 +34,20 @@ return {
 				['<Tab>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_next_item()
-					elseif luasnip.expand_or_jumpable() then
-						luasnip.expand_or_jump()
+					elseif luasnip.jumpable(forward) then
+						luasnip.jump(forward)
 					else
+						luasnip.unlink_current()
 						fallback()
 					end
 				end, { 'i', 's' }),
 				['<S-Tab>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_prev_item()
-					elseif luasnip.jumpable(-1) then
-						luasnip.jump(-1)
+					elseif luasnip.jumpable(backward) then
+						luasnip.jump(backward)
 					else
+						luasnip.unlink_current()
 						fallback()
 					end
 				end, { 'i', 's' }),
