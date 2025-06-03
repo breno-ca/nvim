@@ -59,11 +59,10 @@ return {
 			injections = {
 				enable = true,
 				languages = {
-					javascript = { 'css' },
-					go = { 'sql', 'json' },
+					go = { 'sql', 'json', 'http' },
 					lua = { 'query', 'bash', 'vim' },
 					bash = { 'bash' },
-					-- typescript = { 'html' },
+					javascript = { 'javascript', 'css' },
 				}
 			},
 		}
