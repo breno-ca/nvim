@@ -57,10 +57,12 @@ keymap(i, '<A-]>', '<C-o>O', nsd('Add a new line in INSERT mode'))
 -- formatting
 keymap(v, '<Leader>fj', ':!jq .<CR>', nsd('Format JSON in visual mode'))
 
+
+
 -- buffer actions
 keymap(niv, '<C-z>', '<Cmd>undo<CR>', nsd('Undo last change'))
 keymap(niv, '<C-Z>', '<Cmd>redo<CR>', nsd('Redo last change'))
-keymap(niv, '<C-s>', '<Cmd>w<CR>', nsd('Save changes in current file'))
+-- keymap(niv, '<C-s>', '<Cmd>w<CR>', nsd('Save changes in current file'))
 keymap(nv, '<Leader><Esc>', '<Cmd>w<CR>', nsd('Save changes in current file'))
 -- buffer splitting
 keymap(n, '<Leader>sd', '<Cmd>vsplit<CR><Cmd>wincmd l<CR>', nsd('Split buffer window vertically'))
@@ -95,6 +97,7 @@ keymap(n, '<Leader>gf', telescope.live_grep, nsd('Search files with live grep'))
 keymap(n, '<Leader>gs', telescope.git_status, nsd('Search through git status'))
 keymap(n, '<Leader>sr', telescope.lsp_references, nsd('Show LSP references'))
 keymap(n, '<Leader><CR>', telescope.lsp_implementations, nsd('Show LSP implementation'))
+keymap(n, '<Leader>tr', telescope.resume, nsd('Resume latest search'))
 
 -- barbar tabline
 keymap(n, '<A-,>', '<Cmd>BufferPrevious<CR>', nsd('Go to the next tab'))
@@ -116,17 +119,13 @@ keymap(ntv, '<A-1>', '<Cmd>:FloatermPrev<CR>', nsd('Go to the next terminal'))
 keymap(ntv, '<A-2>', '<Cmd>:FloatermNext<CR>', nsd('Go to the previous terminal'))
 keymap(t, '<A-q>', '<Cmd>:FloatermKill<CR>', nsd('Kill the current terminal'))
 
--- codeium
-local neocodeium = require 'neocodeium'
-keymap(i, '<A-;>', call(neocodeium.accept), nsd('Apply suggestion'))
-keymap(i, '<A-Right>', call(neocodeium.accept_word), nsd('Accept word from suggestion'))
-keymap(i, '<A-Up>', call(neocodeium.cycle, -1), nsd('Cycle to the prevous suggestion'))
-keymap(i, '<A-Down>', call(neocodeium.cycle_or_complete, 1), nsd('Cycle to the next suggestion'))
-keymap(i, '<A-ç>', call(neocodeium.clear), nsd('Clear current suggestion'))
-keymap(n, '<Leader>ncc', '<Cmd>NeoCodeium chat<CR>', nsd('Open Codeium chat window'))
+-- copilot chat
+keymap(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Open Copilot chat window'))
+keymap(nv, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Prompt Generation'))
+keymap(nv, '<Leader>cm', '<Cmd>CopilotChatModels<CR>', nsd('Choose model for Copilot chat'))
 
--- centerpad
-keymap(n, '<Leader>cb', '<Cmd>Centerpad 46 46<CR>', nsd('Centerpad the current buffer'))
+-- zen mode
+keymap(n, '<Leader>zm', '<Cmd>ZenMode<CR>', nsd('Toggle Zen mode'))
 
 -- hurl
 local hurl_set_env_file = function() vim.cmd('HurlSetEnvFile ' .. vim.fn.input('Environment file: ')) end
@@ -137,6 +136,7 @@ keymap(nv, '<Leader>hr', '<Cmd>HurlRunner<CR>', nsd('Run all requests'))
 keymap(n, '<Leader>hte', '<Cmd>HurlRunnerToEntry<CR>', nsd('Run API request to entry'))
 keymap(n, '<Leader>htm', '<Cmd>HurlToggleMode<CR>', nsd('Toggle Hurl mode'))
 keymap(n, '<Leader>htv', '<Cmd>HurlVerbose<CR>', nsd('Run API in verbose mode'))
+keymap(n, '<Leader>hlr', '<Cmd>HurlShowLastResponse<CR>', nsd('Show last response'))
 
 -- leap
 keymap(n, 's', '<Plug>(leap)', nsd('Leap to a word'))
@@ -148,8 +148,8 @@ keymap(xo, 'S', '<Plug>(leap-backward)', nsd('Leap to a word backward'))
 keymap(n, '<Leader>gb', '<Cmd>GitBlameToggle<CR>', nsd('Toggle gitblame comments visibility'))
 
 -- ccc
-keymap(n, '<Leader>cc', '<Cmd>CccPick<CR>', nsd('Color picker'))
-keymap(n, '<Leader>CC', '<Cmd>CccConvert<CR>', nsd('Convert color'))
+keymap(n, '<Leader>cp', '<Cmd>CccPick<CR>', nsd('Color picker'))
+keymap(n, '<Leader>cvc', '<Cmd>CccConvert<CR>', nsd('Convert color'))
 
 -- peek
 keymap(n, '<Leader>mdo', '<Cmd>PeekOpen<CR>', nsd('Peek open'))
