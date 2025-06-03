@@ -10,23 +10,16 @@ return {
 	config = function()
 		local dap = require 'dap'
 		local dapui = require 'dapui'
-		local virtual = require 'nvim-dap-virtual-text'
 		local widgets = require 'dap.ui.widgets'
-
-		dapui.setup {}
+		local mason = os.getenv('HOME') .. '/.local/share/nvim/mason'
 
 		dapui.setup {
 			layouts = { {
 				elements = {
-					{ id = "stacks",      size = 0.25 },
 					{ id = "watches",     size = 0.25 },
-					{ id = "breakpoints", size = 0.25 },
-					{ id = "scopes",      size = 0.25 },
-				}, size = 40, position = "right",
-			}, {
-				elements = {
-					-- { id = "console", size = 0.25 },
-					{ id = "repl", size = 1 },
+					{ id = "scopes",      size = 0.01 },
+					{ id = "breakpoints", size = 0.01 },
+					{ id = "repl",        size = 0.73 },
 				}, size = 10, position = "bottom",
 			}, },
 		}
@@ -166,5 +159,26 @@ return {
 
 			},
 		}
+
+		local web_stack = {
+			'javascript', 'typescript', 'html', 'htmlangular', 'scss', 'json'
+		}
+		dap.adapters.firefox = {
+			type = 'executable',
+			command = 'node',
+			args = { mason .. '/packages/firefox-debug-adapter/dist/adapter.bundle.js' },
+		}
+		for _, language in ipairs(web_stack) do
+			dap.configurations[language] = {
+				{
+					name = 'Start debug adapter',
+					type = 'firefox',
+					request = 'launch',
+					url = 'http://localhost:4200/',
+					webRoot = '${workspaceFolder}',
+					reAttach = true
+				},
+			}
+		end
 	end
 }
