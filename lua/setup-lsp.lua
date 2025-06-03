@@ -96,27 +96,29 @@ lspconfig.lua_ls.setup({
 	},
 })
 
-lspconfig.html.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-
-	filetypes = { 'html', 'javascript' },
-	root_dir = util.root_pattern('index.html', '.git'),
-})
+-- lspconfig.html.setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+--
+-- 	filetypes = { 'html' },
+-- 	root_dir = util.root_pattern('index.html', '.git'),
+--
+-- 	settings = { html = { format = { indentInnerHtml = true } } },
+-- })
 
 lspconfig.cssls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 
-	filetypes = { 'css', 'scss', 'javascript' },
+	filetypes = { 'css', 'scss' },
 })
 
-lspconfig.quick_lint_js.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-
-	filetypes = { 'javascript' },
-})
+-- lspconfig.quick_lint_js.setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+--
+-- 	filetypes = { 'javascript' },
+-- })
 
 lspconfig.pyright.setup({
 	capabilities = capabilities,
@@ -145,14 +147,14 @@ lspconfig.ts_ls.setup({
 
 	-- cmd = { 'typescript-language-server', '--stdio' },
 	-- root_dir = util.root_pattern('package.json', '.git'),
-	-- filetypes = {
-	-- 	'javascript', 'javascriptreact', 'javascript.jsx',
-	-- 	'typescript', 'typescriptreact', 'typescript.tsx'
+	filetypes = { 'javascript', 'typescript' },
+	-- settings = {
+	-- 	typescript = { format = { enable = true } },
+	-- 	javascript = { format = { enable = true } }
 	-- },
-	settings = { typescript = { format = { enable = true } } },
 })
 
-lspconfig.eslint.setup({})
+-- lspconfig.eslint.setup({})
 
 
 -- local namespace = api.nvim_create_namespace("flutter_tools_closing_labels")
@@ -252,10 +254,10 @@ lspconfig.docker_compose_language_service.setup({
 	on_attach = on_attach,
 })
 
--- lspconfig.angularls.setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
--- })
+lspconfig.angularls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
 
 --[[
 Configuração de LSPs (Language Server Protocols)
