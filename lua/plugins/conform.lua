@@ -4,6 +4,7 @@ return {
 	config = function()
 		require 'conform'.setup {
 			formatters_by_ft = {
+				css = { 'prettier' },
 				json = { 'prettier' },
 				scss = { 'prettier' },
 				html = { 'prettier' },
