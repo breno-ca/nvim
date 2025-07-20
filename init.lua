@@ -3,9 +3,10 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.laststatus = 3
 vim.opt.termguicolors = true
+vim.opt.fillchars = { eob = " " }
 vim.g.floaterm_height = 0.9
 vim.g.floaterm_width = 0.9
-vim.g.python3_host_prog = '/home/breno-ca/python3/bin/python3.13'
+vim.g.python3_host_prog = os.getenv('HOME') .. '/python3/bin/python3.13'
 vim.g.gitblame_enabled = 0
 vim.cmd('set clipboard+=unnamedplus')
 vim.cmd('set nofixendofline')
