@@ -5,6 +5,10 @@
 local function nsd(description)
 	return { noremap = true, silent = true, desc = description }
 end
+-- noremap, silent, description, expression, replace keycodes
+local function nsder(description)
+	return { noremap = true, silent = true, desc = description, expr = true, replace_keycodes = false }
+end
 
 -- function caller with arguments
 local function call(func, args)
@@ -35,7 +39,7 @@ keymap(n, '<Down>', 'gj', nsd('Move DOWN through virtual lines in NORMAL mode'))
 keymap(i, '<Up>', '<C-o>gk', nsd('Move UP through virtual lines in INSERT mode'))
 keymap(i, '<Down>', '<C-o>gj', nsd('Move DOWN through virtual lines in INSERT mode'))
 keymap(n, ';', '/', nsd('Search forward in NORMAL mode'))
-keymap(i, '<Esc>', '<Esc><Cmd>w<CR>', nsd('Save file on exit from INSERT mode'))
+-- keymap(i, '<Esc>', '<Esc><Cmd>w<CR>', nsd('Save file on exit from INSERT mode'))
 
 -----------------------------------------------
 -- shortcuts
@@ -71,8 +75,8 @@ keymap(n, '<Leader>S', '<Cmd>wincmd x<CR>', nsd('Swap buffer windows'))
 -- buffer sizing
 keymap(n, '<A-->', '<C-w><', nsd('Decrease buffer window width'))
 keymap(n, '<A-=>', '<C-w>>', nsd('Increase buffer window width'))
-keymap(n, '<A-S-->', '<C-w>-', nsd('Decrease buffer window height'))
-keymap(n, '<A-S-=>', '<C-w>+', nsd('Increase buffer window height'))
+keymap(n, '<A-9>', '<C-w>-', nsd('Decrease buffer window height'))
+keymap(n, '<A-0>', '<C-w>+', nsd('Increase buffer window height'))
 -- buffer movement
 keymap(n, '<Leader><Leader>', '<Cmd>wincmd w<CR>', nsd('Cycle through buffers'))
 keymap(n, '<Leader><Up>', '<Cmd>wincmd k<CR>', nsd('Move to the buffer above'))
@@ -89,6 +93,8 @@ keymap(n, '<Leader>qa', '<Cmd>qa<CR>', nsd('Safe quit'))
 
 -- nvim-tree
 keymap(n, '<Leader>w', '<Cmd>NvimTreeOpen<CR>', nsd('Toggle files tree visibility'))
+keymap(n, '<Leader>ntg', '<Cmd>NvimTreeResize 80<CR>', nsd('Grow files tree width'))
+keymap(n, '<Leader>nts', '<Cmd>NvimTreeResize 30<CR>', nsd('Shrink files tree width'))
 
 -- telescope
 local telescope = require 'telescope.builtin'
@@ -119,6 +125,22 @@ keymap(ntv, '<A-1>', '<Cmd>:FloatermPrev<CR>', nsd('Go to the next terminal'))
 keymap(ntv, '<A-2>', '<Cmd>:FloatermNext<CR>', nsd('Go to the previous terminal'))
 keymap(t, '<A-q>', '<Cmd>:FloatermKill<CR>', nsd('Kill the current terminal'))
 
+-- copilot
+keymap(i, '<A-;>', 'copilot#Accept("<CR>")', nsder('Apply suggestion'))
+keymap(i, '<A-Down>', 'copilot#Next()', nsder('Cycle to the next suggestion, if one is available'))
+keymap(i, '<A-Up>', 'copilot#Previous()', nsder('Cycle to the previous suggestion'))
+keymap(i, '<A-ç>', 'copilot#Suggest()', nsder('Explicitly request a suggestion'))
+keymap(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current suggestion'))
+
+-- neocodeium
+-- local neocodeium = require 'neocodeium'
+-- keymap(i, '<A-;>', call(neocodeium.accept), nsd('Apply suggestion'))
+-- keymap(i, '<A-Right>', call(neocodeium.accept_word), nsd('Accept word from suggestion'))
+-- keymap(i, '<A-Up>', call(neocodeium.cycle, -1), nsd('Cycle to the prevous suggestion'))
+-- keymap(i, '<A-Down>', call(neocodeium.cycle_or_complete, 1), nsd('Cycle to the next suggestion'))
+-- keymap(i, '<A-ç>', call(neocodeium.clear), nsd('Clear current suggestion'))
+-- keymap(n, '<Leader>ncc', '<Cmd>NeoCodeium chat<CR>', nsd('Open Codeium chat window'))
+
 -- copilot chat
 keymap(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Open Copilot chat window'))
 keymap(nv, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Prompt Generation'))
@@ -144,6 +166,9 @@ keymap(n, 'S', '<Plug>(leap-from-window)', nsd('Leap to a word from another wind
 keymap(xo, 's', '<Plug>(leap-forward)', nsd('Leap to a word forward '))
 keymap(xo, 'S', '<Plug>(leap-backward)', nsd('Leap to a word backward'))
 
+-- gitsigns
+keymap(nv, '<Leader>grh', '<Cmd>Gitsigns reset_hunk<CR>', nsd('Discard selected changes'))
+
 -- gitblame
 keymap(n, '<Leader>gb', '<Cmd>GitBlameToggle<CR>', nsd('Toggle gitblame comments visibility'))
 
@@ -152,5 +177,5 @@ keymap(n, '<Leader>cp', '<Cmd>CccPick<CR>', nsd('Color picker'))
 keymap(n, '<Leader>cvc', '<Cmd>CccConvert<CR>', nsd('Convert color'))
 
 -- peek
-keymap(n, '<Leader>mdo', '<Cmd>PeekOpen<CR>', nsd('Peek open'))
-keymap(n, '<Leader>mdc', '<Cmd>PeekClose<CR>', nsd('Peek close'))
+keymap(n, '<Leader>mdo', '<Cmd>PeekOpen<CR>', nsd('Open markdown live preview'))
+keymap(n, '<Leader>mdc', '<Cmd>PeekClose<CR>', nsd('Close markdown live preview'))
