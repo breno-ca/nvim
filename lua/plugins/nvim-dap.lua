@@ -16,15 +16,15 @@ return {
 		dapui.setup {
 			layouts = { {
 				elements = {
-					{ id = "watches",     size = 0.25 },
-					{ id = "scopes",      size = 0.01 },
-					{ id = "breakpoints", size = 0.01 },
-					{ id = "repl",        size = 0.73 },
-				}, size = 10, position = "bottom",
+					{ id = 'watches',     size = 0.25 },
+					{ id = 'scopes',      size = 0.01 },
+					{ id = 'breakpoints', size = 0.01 },
+					{ id = 'repl',        size = 0.73 },
+				}, size = 10, position = 'bottom',
 			}, },
 		}
 
-		dap.listeners.before.attach.dapui_config = function() dapui.open() end
+		-- dap.listeners.before.attach.dapui_config = function() dapui.open() end
 		dap.listeners.before.launch.dapui_config = function() dapui.open() end
 
 		local n = 'n'
@@ -51,7 +51,7 @@ return {
 			port = '${port}',
 			executable = {
 				command = 'dlv',
-				args = { 'dap', '-l', '127.0.0.1:${port}', "--log" },
+				args = { 'dap', '-l', '127.0.0.1:${port}', '--log' },
 			}
 		}
 		dap.configurations.go = {
@@ -160,23 +160,82 @@ return {
 			},
 		}
 
+		local pick_port_for_localhost = function()
+			return 'http://localhost:' .. vim.fn.input('Port: ');
+		end
+		local windows_host_ip_from_wsl = function()
+			local host = vim.fn.system('cat /etc/resolv.conf | grep nameserver | sed "s/nameserver //" | tr -d "\n"')
+			return host
+		end
+		local launch_firefox_from_windows = function(url)
+			local firefox_exe = [[/mnt/c/Program\ Files//Mozilla\ Firefox/firefox.exe]]
+			vim.fn.system(firefox_exe .. ' -start-debugger-server -url ' .. url .. ' &')
+			vim.fn.system('sleep 3')
+		end
 		local web_stack = {
-			'javascript', 'typescript', 'html', 'htmlangular', 'scss', 'json'
+			'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'html', 'htmlangular', 'scss', 'json'
 		}
 		dap.adapters.firefox = {
 			type = 'executable',
 			command = 'node',
 			args = { mason .. '/packages/firefox-debug-adapter/dist/adapter.bundle.js' },
 		}
+		dap.adapters['pwa-node'] = {
+			type = 'server',
+			host = 'localhost',
+			port = '${port}',
+			executable = {
+				command = 'node',
+				args = { mason .. '/packages/js-debug-adapter/js-debug/src/dapDebugServer.js', '${port}' },
+			}
+		}
 		for _, language in ipairs(web_stack) do
 			dap.configurations[language] = {
 				{
-					name = 'Start debug adapter',
+					name = "Launch file",
+					type = "pwa-node",
+					request = "launch",
+					program = "${file}",
+					cwd = "${workspaceFolder}",
+				},
+				{
+					name = 'Attach container',
+					type = 'pwa-node',
+					request = 'attach',
+					cwd = '${workspaceFolder}',
+					port = 9229,
+					sourceMaps = true,
+					restart = true,
+					localRoot = '${workspaceFolder}',
+					remoteRoot = '/usr/src/app',
+				},
+				{
+					name = 'Start Firefox',
 					type = 'firefox',
 					request = 'launch',
-					url = 'http://localhost:4200/',
+					url = pick_port_for_localhost,
 					webRoot = '${workspaceFolder}',
-					reAttach = true
+					reAttach = true,
+				},
+				{
+					name = 'Start/Attach firefox.exe (WSL2 -> Windows)',
+					type = 'firefox',
+					request = 'attach',
+					reAttach = true,
+					host = function()
+						local url = pick_port_for_localhost()
+						launch_firefox_from_windows(url)
+						return windows_host_ip_from_wsl()
+					end,
+					url = "http://localhost:3000", -- unused but mandatory to start
+					webRoot = '${workspaceFolder}',
+				},
+				{
+					name = 'Attach process',
+					type = 'pwa-node',
+					request = 'attach',
+					processId = require 'dap.utils'.pick_process,
+					cwd = '${workspaceFolder}',
 				},
 			}
 		end
