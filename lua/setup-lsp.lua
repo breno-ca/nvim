@@ -1,6 +1,5 @@
 local lspconfig = require 'lspconfig'
 local util = require 'lspconfig/util'
-local api = vim.api
 
 local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
 local on_attach = require 'lsp-format'.on_attach
@@ -20,10 +19,7 @@ lspconfig.gopls.setup({
 
 	settings = {
 		gopls = {
-			analyses = {
-				nilness = true,
-				unusedparams = true,
-			},
+			analyses = { nilness = true, unusedparams = true },
 			completeUnimported = true,
 			gofumpt = true,
 			staticcheck = true,
@@ -47,21 +43,11 @@ lspconfig.phpactor.setup({
 
 	settings = {
 		phpactor = {
-			completion = {
-				enabled = true,
-			},
-			monorepo = {
-				enabled = true,
-			},
-			phpstan = {
-				enabled = true,
-			},
-			psalm = {
-				enabled = true,
-			},
-			xdebug = {
-				enabled = true,
-			},
+			completion = { enabled = true },
+			monorepo = { enabled = true },
+			phpstan = { enabled = true },
+			psalm = { enabled = true },
+			xdebug = { enabled = true },
 		},
 	},
 })
@@ -78,10 +64,7 @@ lspconfig.lua_ls.setup({
 		Lua = {
 			diagnostics = {
 				enable = true,
-				globals = {
-					'vim',
-					'nvim',
-				},
+				globals = { 'vim', 'nvim' },
 			},
 			workspace = {
 				library = {
@@ -89,22 +72,10 @@ lspconfig.lua_ls.setup({
 					[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
 				},
 			},
-			format = {
-				enable = true,
-			},
+			format = { enable = true },
 		},
 	},
 })
-
--- lspconfig.html.setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
---
--- 	filetypes = { 'html' },
--- 	root_dir = util.root_pattern('index.html', '.git'),
---
--- 	settings = { html = { format = { indentInnerHtml = true } } },
--- })
 
 lspconfig.cssls.setup({
 	capabilities = capabilities,
@@ -113,12 +84,7 @@ lspconfig.cssls.setup({
 	filetypes = { 'css', 'scss' },
 })
 
--- lspconfig.quick_lint_js.setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
---
--- 	filetypes = { 'javascript' },
--- })
+lspconfig.tailwindcss.setup({})
 
 lspconfig.pyright.setup({
 	capabilities = capabilities,
@@ -145,83 +111,8 @@ lspconfig.ts_ls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 
-	-- cmd = { 'typescript-language-server', '--stdio' },
-	-- root_dir = util.root_pattern('package.json', '.git'),
-	filetypes = { 'javascript', 'typescript' },
-	-- settings = {
-	-- 	typescript = { format = { enable = true } },
-	-- 	javascript = { format = { enable = true } }
-	-- },
+	filetypes = { 'javascript', 'typescript', 'typescriptreact' },
 })
-
--- lspconfig.eslint.setup({})
-
-
--- local namespace = api.nvim_create_namespace("flutter_tools_closing_labels")
-
--- lspconfig.dartls.setup({
--- 	capabilities = capabilities,
--- 	on_attach = on_attach,
---
--- 	filetypes = { 'dart' },
--- 	root_dir = util.root_pattern('pubspec.yaml', '.git'),
---
--- 	init_options = {
--- 		onlyAnalyzeProjectsWithOpenFiles = true,
--- 		suggestFromUnimportedLibraries = true,
--- 		closingLabels = true,
--- 		outline = true,
--- 		flutterOutline = true,
--- 	},
--- 	settings = {
--- 		dart = {
--- 			completeFunctionCalls = true,
--- 			showTodos = true,
--- 			dartEnableSdkFormatter = true,
--- 			updateImportsOnRename = true,
--- 			enableSnippets = true,
--- 			documentation = true,
--- 		},
--- 		flutter = {
--- 			previewHotReloadOnSave = true,
--- 		},
--- 	},
--- 	handlers = {
--- 		-- other handlers...
--- 		['dart/textDocument/publishClosingLabels'] = function(err, response, _)
--- 			local api = vim.api
--- 			local namespace = api.nvim_create_namespace("flutter_tools_closing_labels")
--- 			local function render_labels(labels, opts)
--- 				api.nvim_buf_clear_namespace(0, namespace, 0, -1)
--- 				opts = opts or {}
--- 				local highlight = opts and opts.highlight or "Comment"
--- 				local prefix = opts and opts.prefix or "// "
---
--- 				for _, item in ipairs(labels) do
--- 					local line = tonumber(item.range["end"].line)
--- 					if line <= api.nvim_buf_line_count(0) then
--- 						api.nvim_buf_set_extmark(0, namespace, line, -1, {
--- 							virt_text = { {
--- 								prefix .. item.label,
--- 								highlight,
--- 							} },
--- 							virt_text_pos = "eol",
--- 							hl_mode = "combine",
--- 						})
--- 					end
--- 				end
--- 			end
---
--- 			local opts = { enabled = true, highlight = "Comment", prefix = "// " } -- substitua por suas configurações
--- 			if err or not opts.enabled then return end
--- 			local uri = response.uri
--- 			if uri ~= vim.uri_from_bufnr(0) then return end
--- 			render_labels(response.labels, opts)
--- 		end,
--- 		-- other handlers...
--- 	},
---
--- })
 
 lspconfig.bashls.setup({
 	capabilities = capabilities,
@@ -240,9 +131,10 @@ lspconfig.bashls.setup({
 
 lspconfig.jsonls.setup({})
 
--- lspconfig.yamlls.setup({})
-
-lspconfig.sqls.setup({})
+lspconfig.sqls.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
 
 lspconfig.dockerls.setup({
 	capabilities = capabilities,
@@ -254,24 +146,7 @@ lspconfig.docker_compose_language_service.setup({
 	on_attach = on_attach,
 })
 
-lspconfig.angularls.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
---[[
-Configuração de LSPs (Language Server Protocols)
-
-Cada linguagem a ser utilizada deve conter uma
-chamada setup() para funcionar contendo ou não
-uma table de configurações.
-
-Para listar os LSPs disponíveis execute :Mason.
-
-Para instalar um LSP da lista basta escrever
-:MasonInstall informando o nome do LSP desejado
-
-A lista de compatibilidade e configurações se
-encontra em:
-https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#bashls
---]]
+-- lspconfig.angularls.setup({
+-- 	capabilities = capabilities,
+-- 	on_attach = on_attach,
+-- })
