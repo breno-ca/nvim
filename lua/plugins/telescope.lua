@@ -27,16 +27,12 @@ return {
 		telescope.setup {
 			defaults = {
 				filesize_limit = 2,
-
 				mappings = { i = { ['<CR>'] = select_one_or_multi } },
-
 				preview = { treesitter = { enable = true } },
-
 				layout_config = {
 					scroll_speed = 3,
 					horizontal = { preview_width = 0.60 }
 				},
-
 			},
 			extensions = {
 				fzf = {
