@@ -10,6 +10,7 @@ return {
 
 	config = function()
 		require 'nvim-tree'.setup {
+			actions = { open_file = { resize_window = false } },
 			renderer = {
 				icons = { show = { diagnostics = false } },
 				indent_width = 2,
@@ -37,6 +38,13 @@ return {
 			view = {
 				width = 30,
 				cursorline = true, preserve_window_proportions = true,
+				-- float = {
+				-- 	enable = true,
+				-- 	quit_on_focus_loss = true,
+				-- 	open_win_config = {
+				-- 		height = 100
+				-- 	}
+				-- }
 				-- adaptive_size = true
 			},
 			update_focused_file = { enable = true },
