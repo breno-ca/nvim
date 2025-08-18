@@ -3,16 +3,16 @@
 
 -- noremap, silent, description
 local function nsd(description)
-	return { noremap = true, silent = true, desc = description }
+  return { noremap = true, silent = true, desc = description }
 end
 -- noremap, silent, description, expression, replace keycodes
 local function nsder(description)
-	return { noremap = true, silent = true, desc = description, expr = true, replace_keycodes = false }
+  return { noremap = true, silent = true, desc = description, expr = true, replace_keycodes = false }
 end
 
 -- function caller with arguments
 local function call(func, args)
-	return function() func(args) end
+  return function() func(args) end
 end
 
 -- mode alias
@@ -27,7 +27,7 @@ local ntv = { n, t, v }
 local niv = { n, i, v }
 
 local keymap = function(mode, mapping, command, opts)
-	vim.keymap.set(mode, mapping, command, opts)
+  vim.keymap.set(mode, mapping, command, opts)
 end
 
 -----------------------------------------------
@@ -50,6 +50,7 @@ keymap(n, '<Leader>vl', '<Cmd>set wrap!<CR>', nsd('Toggle line wrapping'))
 -- code actions
 keymap(n, '<A-i>', call(vim.diagnostic.open_float), nsd('Inspect diagnostics'))
 keymap(ni, '<A-a>', call(vim.lsp.buf.code_action), nsd('Show code actions menu'))
+keymap(n, '<Leader><CR>', call(vim.lsp.buf.implementation), nsd('Go to implementation'))
 -- moving lines
 keymap(n, '<A-k>', 'ddkP', nsd('Move current line UP in NORMAL mode'))
 keymap(n, '<A-j>', 'ddp', nsd('Move current line DOWN in NORMAL mode'))
@@ -102,20 +103,25 @@ keymap(n, '<Leader>f', telescope.find_files, nsd('Search files by name'))
 keymap(n, '<Leader>gf', telescope.live_grep, nsd('Search files with live grep'))
 keymap(n, '<Leader>gs', telescope.git_status, nsd('Search through git status'))
 keymap(n, '<Leader>sr', telescope.lsp_references, nsd('Show LSP references'))
-keymap(n, '<Leader><CR>', telescope.lsp_implementations, nsd('Show LSP implementation'))
+keymap(n, '<Leader>tsi', telescope.lsp_implementations, nsd('Show LSP implementation'))
+keymap(n, '<Leader>tsd', telescope.lsp_definitions, nsd('Show LSP implementation'))
 keymap(n, '<Leader>tr', telescope.resume, nsd('Resume latest search'))
 
 -- barbar tabline
 keymap(n, '<A-,>', '<Cmd>BufferPrevious<CR>', nsd('Go to the next tab'))
+keymap(n, '<Leader>,', '<Cmd>BufferPrevious<CR>', nsd('Go to the next tab'))
 keymap(n, '<A-.>', '<Cmd>BufferNext<CR>', nsd('Go to the previous tab'))
+keymap(n, '<Leader>.', '<Cmd>BufferNext<CR>', nsd('Go to the previous tab'))
 keymap(n, '<A-S-,>', '<Cmd>BufferMovePrevious<CR>', nsd('Move the current tab to the left'))
+keymap(n, '<Leader>mb', '<Cmd>BufferMovePrevious<CR>', nsd('Move the current tab to the left'))
 keymap(n, '<A-S-.>', '<Cmd>BufferMoveNext<CR>', nsd('Move the current tab to the right'))
+keymap(n, '<Leader>mn', '<Cmd>BufferMoveNext<CR>', nsd('Move the current tab to the right'))
 keymap(n, '<Leader>qq', '<Cmd>BufferClose<CR>', nsd('Close the current tab'))
 
 -- trouble
 keymap(n, '<Leader>tw', '<Cmd>Trouble diagnostics toggle focus=true<CR>', nsd('Show workspace diagnostics'))
 keymap(n, '<Leader>td', '<Cmd>Trouble diagnostics toggle focus=true filter.buf=0<CR>',
-	nsd('Show current document diagnostics'))
+  nsd('Show current document diagnostics'))
 keymap(n, '<Leader>tf', '<Cmd>Trouble quickfix toggle focus=true<CR>', nsd('Show quickfixes'))
 
 -- floaterm
@@ -143,8 +149,10 @@ keymap(i, '<A-Ç>', 'copilot#Dismiss()', nsder('Dismiss the current suggestion')
 
 -- copilot chat
 keymap(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Open Copilot chat window'))
-keymap(nv, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Prompt Generation'))
+-- keymap(nv, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Prompt Generation'))
 keymap(nv, '<Leader>cm', '<Cmd>CopilotChatModels<CR>', nsd('Choose model for Copilot chat'))
+keymap(nv, '<Leader>cs', ':CopilotChatSave ', nsd('Save chat to a file'))
+keymap(nv, '<Leader>cl', ':CopilotChatLoad ', nsd('Load chat from a file'))
 
 -- zen mode
 keymap(n, '<Leader>zm', '<Cmd>ZenMode<CR>', nsd('Toggle Zen mode'))
