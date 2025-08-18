@@ -1,4 +1,7 @@
 return {
-	"hudclark/grpc-nvim",
-	requires = { "nvim-lua/plenary.nvim" }
+  'hudclark/grpc-nvim',
+
+  dependencies = {
+    'nvim-lua/plenary.nvim'
+  }
 }

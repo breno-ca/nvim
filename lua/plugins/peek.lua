@@ -5,7 +5,7 @@ return {
 
 	config = function()
 		local peek = require 'peek'
-		peek.setup { app = '/opt/Brave/brave' }
+		peek.setup { app = '/home/breno-ca/bin/wfirefox' }
 		vim.api.nvim_create_user_command('PeekOpen', peek.open, {})
 		vim.api.nvim_create_user_command('PeekClose', peek.close, {})
 	end,

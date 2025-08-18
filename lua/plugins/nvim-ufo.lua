@@ -1,20 +1,21 @@
 return {
-	'kevinhwang91/nvim-ufo',
-	dependencies = {
-		'kevinhwang91/promise-async',
-	},
+  'kevinhwang91/nvim-ufo',
 
-	config = function()
-		vim.o.foldcolumn = '0'
-		vim.o.foldlevel = 99
-		vim.o.foldlevelstart = 99
-		vim.o.foldenable = true
+  dependencies = {
+    'kevinhwang91/promise-async',
+  },
 
-		vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-		vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+  config = function()
+    vim.o.foldcolumn = '0'
+    vim.o.foldlevel = 99
+    vim.o.foldlevelstart = 99
+    vim.o.foldenable = true
 
-		require 'ufo'.setup({
-			open_fold_hl_timeout = 0,
-		})
-	end
+    vim.keymap.set('n', 'zR', require 'ufo'.openAllFolds)
+    vim.keymap.set('n', 'zM', require 'ufo'.closeAllFolds)
+
+    require 'ufo'.setup {
+      open_fold_hl_timeout = 0,
+    }
+  end
 }

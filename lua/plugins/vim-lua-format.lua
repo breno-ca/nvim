@@ -1,3 +1,3 @@
 return {
-	'andrejlevkovitch/vim-lua-format'
+  'andrejlevkovitch/vim-lua-format'
 }
