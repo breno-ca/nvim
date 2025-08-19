@@ -9,7 +9,6 @@ return {
 
   config = function()
     local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
-    local on_attach = require 'lsp-format'.on_attach
 
     require 'flutter-tools'.setup {
       widget_guides = {
@@ -19,9 +18,7 @@ return {
         enabled = true,
       },
       lsp = {
-        on_attach = on_attach,
         capabilities = capabilities,
-
         settings = {
           showTodos = true,
           completeFunctionCalls = true,
