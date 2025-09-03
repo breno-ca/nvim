@@ -40,6 +40,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- init
+require 'globals'
 require 'lazy'.setup 'plugins'
 require 'shortcuts'
 require 'lsp'

@@ -1,5 +1,18 @@
 {
-    "diagnostics.globals": [
-        "vim"
-    ]
+  "diagnostics.globals": [
+    "vim",
+    "nsd",
+    "nsder",
+    "keymap",
+    "call",
+    "n",
+    "i",
+    "t",
+    "v",
+    "ni",
+    "nv",
+    "xo",
+    "ntv",
+    "niv"
+  ]
 }

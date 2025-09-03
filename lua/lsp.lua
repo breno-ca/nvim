@@ -5,16 +5,6 @@ if ok_cmp then
   capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 end
 
--- global on_attach (exemplo: mapeamento de teclas)
-local function on_attach(client, bufnr)
-  local buf_map = function(mode, lhs, rhs, opts)
-    opts = opts or { noremap = true, silent = true }
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-  end
-  buf_map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-  buf_map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-end
-
 -- root_pattern helper
 local function root_pattern(...)
   local patterns = { ... }
@@ -33,7 +23,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'gopls' },
       root_dir = root_pattern('go.work', 'go.mod', '.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
       settings = {
         gopls = {
           analyses = { nilness = true, unusedparams = true },
@@ -52,16 +41,15 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- -- phpactor
+-- phpactor
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'php' },
   callback = function(args)
     vim.lsp.start({
       name = 'phpactor',
-      cmd = { 'phpactor', '--quiet', 'language-server' },
+      cmd = { 'phpactor', 'language-server' },
       root_dir = vim.fn.getcwd(),
       capabilities = capabilities,
-      on_attach = on_attach,
       settings = {
         phpactor = {
           completion = { enabled = true },
@@ -71,40 +59,9 @@ vim.api.nvim_create_autocmd('FileType', {
           xdebug = { enabled = true },
         },
       },
-      -- handlers = {
-      --   ['window/showMessage'] = function(_, result, ctx)
-      --     if result.type == vim.lsp.protocol.MessageType.Error or result.type == vim.lsp.protocol.MessageType.Warning then
-      --       vim.lsp.handlers['window/showMessage'](_, result, ctx)
-      --     end
-      --   end
-      -- }
     })
   end,
 })
-
--- vim.api.nvim_create_autocmd('FileType', {
---   pattern = { 'php' },
---   callback = function(args)
---     vim.lsp.start({
---       name = 'phpactor',
---       cmd = { 'phpactor', 'language-server' },
---       root_dir = vim.fn.getcwd(),
---       capabilities = capabilities,
---       on_attach = function(client, bufnr)
---         on_attach(client, bufnr)
---       end,
---       settings = {
---         phpactor = {
---           completion = { enabled = true },
---           monorepo = { enabled = true },
---           phpstan = { enabled = true },
---           psalm = { enabled = true },
---           xdebug = { enabled = true },
---         },
---       },
---     })
---   end,
--- })
 
 -- lua_ls
 vim.api.nvim_create_autocmd('FileType', {
@@ -115,7 +72,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'lua-language-server' },
       root_dir = root_pattern('.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
       settings = {
         Lua = {
           diagnostics = {
@@ -150,7 +106,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'vscode-css-language-server', '--stdio' },
       root_dir = root_pattern('.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
     })
   end,
 })
@@ -164,7 +119,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'tailwindcss-language-server', '--stdio' },
       root_dir = root_pattern('tailwind.config.js', 'tailwind.config.cjs', 'tailwind.config.ts', '.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
     })
   end,
 })
@@ -178,7 +132,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'pyright-langserver', '--stdio' },
       root_dir = root_pattern('requirements.txt', '.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
       settings = {
         python = {
           analysis = {
@@ -203,9 +156,8 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'typescript-language-server', '--stdio' },
       root_dir = root_pattern('package.json', 'tsconfig.json', '.git')(args.file),
       capabilities = capabilities,
-      on_attach = function(client, bufnr)
+      on_attach = function(client)
         client.server_capabilities.documentFormattingProvider = false
-        on_attach(client, bufnr)
       end,
     })
   end,
@@ -220,7 +172,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'bash-language-server', 'start' },
       root_dir = root_pattern('.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
       init_options = {
         format = {
           enable = true,
@@ -239,7 +190,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'vscode-json-language-server', '--stdio' },
       root_dir = root_pattern('.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
     })
   end,
 })
@@ -253,9 +203,8 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'sqls' },
       root_dir = root_pattern('.git')(args.file),
       capabilities = capabilities,
-      on_attach = function(client, bufnr)
+      on_attach = function(client)
         client.server_capabilities.documentFormattingProvider = false
-        on_attach(client, bufnr)
       end,
     })
   end,
@@ -270,7 +219,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'docker-langserver', '--stdio' },
       root_dir = root_pattern('.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
     })
   end,
 })
@@ -284,7 +232,6 @@ vim.api.nvim_create_autocmd('FileType', {
       cmd = { 'docker-compose-langserver', '--stdio' },
       root_dir = root_pattern('.git')(args.file),
       capabilities = capabilities,
-      on_attach = on_attach,
     })
   end,
 })
