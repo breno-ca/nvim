@@ -27,7 +27,7 @@ return {
     dap.listeners.before.launch.dapui_config = function() dapui.open() end
 
     local n = 'n'
-    vim.keymap.set(n, '<Leader>d', dapui.toggle, {})
+    vim.keymap.set(n, '<Leader>vd', dapui.toggle, {})
     vim.keymap.set(n, '<Leader>3', dap.run_last, {})
     vim.keymap.set(n, '<Leader>4', dap.restart, {})
     vim.keymap.set(n, '<Leader>5', dap.continue, {})
@@ -106,6 +106,7 @@ return {
     dap.adapters.php = {
       type = 'executable',
       command = 'node',
+      port = '${port}',
       args = { mason .. '/packages/php-debug-adapter/extension/out/phpDebug.js' },
     }
     dap.configurations.php = {
@@ -154,8 +155,16 @@ return {
           type = 'shell',
           command = 'kill $(lsof -t -i :8000)',
         },
-
       },
+      {
+        type = 'php',
+        request = 'launch',
+        name = 'Listen for Xdebug',
+        port = 9003,
+        pathMappings = {
+          ['/var/www/html'] = "${workspaceFolder}",
+        },
+      }
     }
 
     local pick_port_for_localhost = function()
