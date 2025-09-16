@@ -55,7 +55,7 @@ keymap(n, '<Leader><Right>', '<Cmd>wincmd l<CR>', nsd('Move to the buffer on the
 keymap(n, '<Leader>qw', '<Cmd>wincmd q<CR>', nsd('Close buffer window'))
 
 -- quit
-keymap(n, '<Leader>qa', '<Cmd>qa<CR>', nsd('Safe quit'))
+keymap(n, '<Leader>qa', '<Cmd>CopilotChatSave lastchat<CR><Cmd>qa<CR>', nsd('Safe quit'))
 
 -- plugins --
 -- nvim-tree

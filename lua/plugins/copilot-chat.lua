@@ -6,6 +6,7 @@ local github_copilot = {
   build = 'make tiktoken',
 
   opts = {
+    log_level = 'error',
     language = 'Brazilian Portuguese',
     question_header = '## Breno ',
     window = {
@@ -80,9 +81,9 @@ local local_llm = {
       return vim.tbl_map(function(model) return { id = model.id, name = model.id } end, response.body.data)
     end
     return {
+      log_level = 'error',
       model = ggufs .. model,
       system_prompt = system_prompt,
-
       question_header = '## Breno ',
       window = {
         title = '| llama.cpp Chat | ' .. model .. ' |',
