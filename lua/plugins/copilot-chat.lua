@@ -7,6 +7,7 @@ local github_copilot = {
 
   opts = {
     log_level = 'error',
+    model = 'gpt-5-mini',
     language = 'Brazilian Portuguese',
     question_header = '## Breno ',
     window = {
@@ -47,16 +48,18 @@ local local_llm = {
     local model = 'qwen2.5-coder-3b-i.gguf'
 
     local system_prompt = [[
-		Você é um assistente de programação que responde de forma curta, precisa e objetiva. Só explique quando for explicitamente solicitado. Evite comentários desnecessários. Sua função principal é ajudar com código.
-		
-		Tecnologias principais:
-		- Backend: Go
-		- Frontend: Angular
-		
-		Sempre priorize respostas concisas e exemplos diretos. Foque no problema apresentado e evite rodeios.
-		]]
-    -- .. 'o idioma padrão que você irá utilizar é português brasileiro. \n'
-    -- .. 'respostas curtas. \n'
+      Você é um assistente de programação.
+      Sua função principal é ajudar com código.
+
+      Você responde de forma curta e objetiva.
+      Você foca apenas no problema apresentado.
+      Você só explica suas respostas se for solicitado.
+      Evite comentários desnecessários.
+
+      Tecnologias principais:
+      - Backend: Go
+      - Frontend: Angular
+	]]
 
     local embed = function(inputs, headers)
       local response, err = utils.curl_post(
@@ -120,4 +123,9 @@ local local_llm = {
   end
 }
 
-return github_copilot
+local copilot_chat = {
+  github_copilot = github_copilot,
+  local_llm = local_llm
+}
+
+return copilot_chat[os.getenv('NVIM_COPILOT_CHAT_PROVIDER')] or github_copilot

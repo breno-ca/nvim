@@ -1,4 +1,4 @@
-local copilot = {
+local github_copilot = {
   'github/copilot.vim',
 
   config = function()
@@ -32,7 +32,7 @@ local windsurf = {
   end
 }
 
-local llama = {
+local local_llm = {
   'ggml-org/llama.vim',
 
   init = function()
@@ -48,4 +48,10 @@ local llama = {
   end
 }
 
-return windsurf
+local ai_suggestions = {
+  github_copilot = github_copilot,
+  windsurf = windsurf,
+  local_llm = local_llm
+}
+
+return ai_suggestions[os.getenv('NVIM_AI_SUGGESTIONS_PROVIDER')] or windsurf
