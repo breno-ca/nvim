@@ -10,7 +10,7 @@ vim.keymap.set("n", "<Leader>x", function()
   local checked = "%- %[x%]"
   local unchecked = "%- %[%s%]"
 
-  local mark = function(line) vim.fn.setline(line_number, line) end
+  local mark = function(line_content) vim.fn.setline(line_number, line_content) end
   local checkbox = function(pattern) return line:find(pattern) end
 
   local check = function() return line:gsub("%- %[%s%]", "- [x]", 1) end
