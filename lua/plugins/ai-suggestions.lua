@@ -51,7 +51,8 @@ local local_llm = {
 local ai_suggestions = {
   github_copilot = github_copilot,
   windsurf = windsurf,
-  local_llm = local_llm
+  local_llm = local_llm,
+  disabled = {}
 }
 
-return ai_suggestions[os.getenv('NVIM_AI_SUGGESTIONS_PROVIDER')] or windsurf
+return ai_suggestions[os.getenv('NVIM_AI_SUGGESTIONS_PROVIDER')] or ai_suggestions.windsurf

@@ -48,18 +48,21 @@ local local_llm = {
     local model = 'qwen2.5-coder-3b-i.gguf'
 
     local system_prompt = [[
-      Você é um assistente de programação.
-      Sua função principal é ajudar com código.
+      You are:
+      - a programming assistant.
 
-      Você responde de forma curta e objetiva.
-      Você foca apenas no problema apresentado.
-      Você só explica suas respostas se for solicitado.
-      Evite comentários desnecessários.
+      You MUST:
+      - help with code.
+      - answer briefly and objectively.
+      - focus only on the problem presented.
+      - explain your answers only if requested.
+      - avoid unnecessary comments.
+      - always respond in Brazilian Portuguese.
 
-      Tecnologias principais:
-      - Backend: Go
-      - Frontend: Angular
-	]]
+      Main technologies:
+      - Go
+      - Angular
+    ]]
 
     local embed = function(inputs, headers)
       local response, err = utils.curl_post(
@@ -123,9 +126,10 @@ local local_llm = {
   end
 }
 
-local copilot_chat = {
+local ai_chat = {
   github_copilot = github_copilot,
-  local_llm = local_llm
+  local_llm = local_llm,
+  disabled = {}
 }
 
-return copilot_chat[os.getenv('NVIM_COPILOT_CHAT_PROVIDER')] or github_copilot
+return ai_chat[os.getenv('NVIM_AI_CHAT_PROVIDER')] or ai_chat.disabled
