@@ -30,13 +30,14 @@
 
 ;HTML highlight injection for string literals
 (
-  (assignment_expression  
+  (assignment_expression 
     left: (member_expression
       property: (property_identifier) @html
       (#eq? @html "innerHTML")
     )
-    
-    right: (template_string) @injection.content
+    right: (template_string
+      (string_fragment) @injection.content
+    )
     (#set! injection.language "html")
   )
 )
