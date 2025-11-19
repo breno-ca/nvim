@@ -17,6 +17,12 @@ _G.nsder = function(description)
 end
 
 _G.call = function(func, args)
+  if type(args) == "table" then
+    return function()
+      return func(table.unpack(args))
+    end
+  end
+
   return function()
     func(args)
   end
