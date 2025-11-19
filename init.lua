@@ -18,7 +18,9 @@ vim.cmd('set number')
 vim.cmd("let mapleader = ' '")
 vim.cmd('autocmd VimEnter * NvimTreeOpen')
 vim.cmd('autocmd VimEnter * wincmd w')
-vim.cmd('autocmd VimEnter * CopilotChatLoad lastchat')
+if (vim.fn.exists(':CopilotChatLoad') == 1) then
+  vim.cmd('autocmd VimEnter * CopilotChatLoad lastchat')
+end
 
 -- filetype extras
 vim.filetype.add({

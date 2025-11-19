@@ -55,7 +55,10 @@ keymap(n, '<Leader><Right>', '<Cmd>wincmd l<CR>', nsd('Move to the buffer on the
 keymap(n, '<Leader>qw', '<Cmd>wincmd q<CR>', nsd('Close buffer window'))
 
 -- quit
-keymap(n, '<Leader>qa', '<Cmd>CopilotChatSave lastchat<CR><Cmd>qa<CR>', nsd('Safe quit'))
+if (vim.fn.exists(':CopilotChatSave') == 1) then
+  keymap(n, '<Leader>qa', '<Cmd>CopilotChatSave lastchat<CR><Cmd>qa<CR>', nsd('Safe quit'))
+end
+keymap(n, '<Leader>qa', '<Cmd>qa<CR>', nsd('Safe quit'))
 
 -- plugins --
 -- nvim-tree
@@ -98,11 +101,13 @@ keymap(ntv, '<A-2>', '<Cmd>:FloatermNext<CR>', nsd('Go to the previous terminal'
 keymap(t, '<A-q>', '<Cmd>:FloatermKill<CR>', nsd('Kill the current terminal'))
 
 -- copilot chat
-keymap(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Open Copilot chat window'))
--- keymap(nv, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Prompt Generation'))
-keymap(nv, '<Leader>cm', '<Cmd>CopilotChatModels<CR>', nsd('Choose model for Copilot chat'))
-keymap(nv, '<Leader>cs', ':CopilotChatSave ', nsd('Save chat to a file'))
-keymap(nv, '<Leader>cl', ':CopilotChatLoad ', nsd('Load chat from a file'))
+if (vim.fn.exists(':CopilotChatSave') == 1) then
+  keymap(nv, '<Leader>cc', '<Cmd>CopilotChatToggle<CR>', nsd('Open Copilot chat window'))
+  -- keymap(nv, '<Leader>cs', '<Cmd>CopilotChatStop<CR>', nsd('Stop Prompt Generation'))
+  keymap(nv, '<Leader>cm', '<Cmd>CopilotChatModels<CR>', nsd('Choose model for Copilot chat'))
+  keymap(nv, '<Leader>cs', ':CopilotChatSave ', nsd('Save chat to a file'))
+  keymap(nv, '<Leader>cl', ':CopilotChatLoad ', nsd('Load chat from a file'))
+end
 
 -- zen mode
 keymap(n, '<Leader>zm', '<Cmd>ZenMode<CR>', nsd('Toggle Zen mode'))
